@@ -1,0 +1,124 @@
+@import "../../../assets/scss/config.scss";
+
+.actions-menu-container {
+    z-index: 4;
+    position: fixed;
+    left: 106px;
+    bottom: 27px;
+
+    button {
+        outline: none;
+        color: $accent;
+        background-color: #FFFFFF;
+        min-width: 90px;
+        height: 42px;
+        padding: 10px 16px 10px 16px;
+        border-radius: 30px;
+        border: 1px solid $accent;
+        gap: 4px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 700;
+
+        &:not(:disabled) {
+            svg {
+                path {
+                    stroke: $accent;
+                }
+            }
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            border-color: #DBDBDB;
+            background-color: #DBDBDB;
+            color: #FFFFFF;
+
+            svg {
+                path {
+                    fill: #FFFFFF;
+                    stroke: #FFFFFF;
+                }
+            }
+        }
+
+        span.title {
+            padding-top: 1px;
+        }
+
+        svg.arrow-up {
+            transform: rotate(180deg);
+        }
+    }
+
+    .dropdown-panel {
+        position: absolute;
+        top: -90px;
+        min-width: 134px;
+        width: max-content;
+        padding: 6px 0px;
+        border-radius: 4px;
+        gap: 6px;
+        display: flex;
+        list-style: none;
+        margin: 0;
+        box-shadow: 0px 0px 5px 2px #3C3C3C14;
+        background-color: #FFFFFF;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+
+        li {
+            margin: 0;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 0px 12px;
+            box-sizing: border-box;
+
+            &.disabled {
+                cursor: not-allowed;
+                opacity: .5;
+            }
+
+            &:not(.disabled) {
+                &:hover {
+                    cursor: pointer;
+                    background-color: $background-light;
+                }
+            }
+        }
+    }
+}
+
+.help-button {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 8px 0px #333C4E33;
+    position: fixed;
+    left: unset;
+    right: 36px;
+    bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &.blue {
+        svg {
+            path {
+                fill: #0D41F9;
+            }
+        }
+    }
+}

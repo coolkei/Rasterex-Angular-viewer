@@ -1,0 +1,107 @@
+@import "../../../../assets/scss/config.scss";
+
+.dropdown-container {
+    position: relative;
+    font-size: 12px;
+    //width: fit-content;
+
+    .dropdown-wrapper {
+        border-radius: 4px;
+        border: 1px solid #EDF1F2;
+        padding: 6px 10px 6px 10px;
+        position: relative;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        cursor: pointer;
+
+        &.opened {
+            .btn-dropdown {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .options-container {
+        position: relative;
+
+        .options-wrapper {
+            position: absolute;
+            top: 3px;
+            z-index: 10;
+            background: #FFFFFF;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            width: 100%;
+
+            ul.options {
+                width: 100%;
+                list-style-type: none;
+                display: flex;
+                flex-direction: column;
+                padding: unset;
+                overflow: auto;
+                max-height: 170px;
+
+                li {
+                    padding: 8px 18px;
+                    min-height: 18px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    overflow: hidden;
+                    box-sizing: border-box;
+                    height: 32px;
+                    width: 100%;
+
+                    &:hover,
+                    &:focus-visible {
+                        background-color: $background-light;
+                        outline: none;
+                        box-shadow: none;
+                    }
+                    &.selected {
+                        background-color: $background-light;
+                    }
+                }
+            }
+        }
+    }
+
+    .line-style {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #878E95;
+        margin-top: -8px;
+        white-space: nowrap;
+        height: 28px;
+        width: 100%;
+        overflow: hidden;
+
+        &:not(.selected) {
+            font-size: 48px;
+        }
+
+        &.selected {
+            font-size: 44px;
+            flex-grow: 1;
+        }
+    }
+
+    .line-style-solid {
+        display: flex;
+        flex-grow: 1;
+        width: 100%;
+        border-bottom: 4px solid #878E95;
+    }
+
+    .opened {
+        border: 1px solid #A4ABAE;
+
+        img {
+            filter: invert(1);
+        }
+    }
+}

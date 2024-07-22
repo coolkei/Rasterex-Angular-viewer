@@ -1,0 +1,55 @@
+@import "../../../assets/scss/config.scss";
+
+.print-modal {
+    width: 364px;
+
+    .rx-modal-dialog-header {
+        padding-top: 10px;
+
+        img {
+            right: 14px; 
+            top: 10px;
+        }
+    }
+
+    .print-document {
+        font-size: 13.5px;
+        font-weight: 400;
+        color: $main;
+        padding: 0px 24px 34px;
+
+        p {
+            margin: 10px 0 8px;
+        }
+
+        .select-paper-orientation {
+            margin-top: 20px;
+        }
+
+        .print-switch {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 12px 0;
+        }
+    
+        rx-dropdown {
+            ::ng-deep {
+                .dropdown-container {
+                    background-color: $background-light;
+                    font-size: 14px;
+    
+                    .options-container {
+                        .options-wrapper {
+                            width: 100%;
+    
+                            li {
+                                font-size: 13px !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

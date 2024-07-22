@@ -1,0 +1,57 @@
+<rx-modal-dialog class="confirm-dialog">
+    <div *ngIf="!isUpdateComparison; else progressTemplate" class="rx-modal-container" style="min-width: 504px;">
+        <div class="rx-modal-header">
+            <img (click)="onCancelClick()" class="close" src="/assets/images/close-modal-ico.svg" />
+            <span class="title">Edit "{{comparison?.name}}"</span>
+        </div>
+        <div class="rx-modal-body">
+            <div class="grid">
+                <ng-container>
+                    <div class="header">Files:</div><div class="header">State:</div><div class="header">Color:</div>
+                </ng-container>
+                <ng-container>
+                    <div class="cell color-main"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{comparison?.activeFile?.name}}</span></div>
+                    <div class="cell color-secondary">{{comparison?.activeSetAs?.title}}</div>
+                    <rx-dropdown
+                        [placeholder]="'Select color...'"
+                        [options]="colorOptions"
+                        [value]="comparison?.activeColor"
+                        (valueChange)="onActiveColorSelect($event)">
+                    </rx-dropdown>
+                </ng-container>
+                <ng-container>
+                    <div class="cell color-main"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{comparison?.otherFile?.name}}</span></div>
+                    <div class="cell color-secondary">{{comparison?.otherSetAs?.title}}</div>
+                    <rx-dropdown
+                        [placeholder]="'Select color...'"
+                        [options]="colorOptions"
+                        [value]="comparison?.otherColor"
+                        (valueChange)="onOtherColorSelect($event)">
+                    </rx-dropdown>
+                </ng-container>
+            </div>
+
+            <button class="swap" (click)="onSwapClick()">
+                <svg class="swap" width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.72657 0.537395C8.99906 0.537395 9.21608 0.762187 9.21608 1.03502V11.7588L10.7168 10.2269C10.9082 10.0315 11.2191 10.0314 11.4104 10.2269C11.4104 10.2269 11.4104 10.2269 11.4105 10.2269L11.339 10.2968C11.4151 10.3745 11.4531 10.4763 11.4531 10.5779C11.4531 10.6796 11.4151 10.7814 11.339 10.8591L9.00195 13.2448C8.84975 13.4002 8.60329 13.4002 8.45119 13.2448L6.11414 10.8591C5.96194 10.7037 5.96194 10.4521 6.11414 10.2968C6.26634 10.1416 6.5128 10.1415 6.6649 10.2968L8.72657 0.537395ZM8.72657 0.537395C8.45407 0.537395 8.23706 0.762188 8.23706 1.03502V11.7588L6.73636 10.2269M8.72657 0.537395L6.73636 10.2269M6.73636 10.2269C6.545 10.0314 6.23409 10.0316 6.04272 10.2268C5.8524 10.421 5.85243 10.7348 6.0427 10.929L8.37973 13.3148L6.73636 10.2269ZM0.589589 3.06965L2.92662 0.683943C2.92662 0.683935 2.92663 0.683928 2.92664 0.68392C3.11795 0.48852 3.42896 0.48852 3.62027 0.68392C3.62028 0.683928 3.62029 0.683935 3.6203 0.683943L5.95732 3.06965C6.0526 3.16692 6.10001 3.29423 6.10001 3.42075C6.10001 3.54725 6.05261 3.67456 5.95734 3.77182L0.589589 3.06965ZM0.589589 3.06965C0.399316 3.26389 0.399284 3.5777 0.589612 3.77187C0.780971 3.96709 1.09186 3.9673 1.28323 3.77185C1.28323 3.77184 1.28324 3.77183 1.28325 3.77182L2.78395 2.23986M0.589589 3.06965L2.78395 2.23986M2.78395 2.23986L2.78395 12.9637C2.78395 13.2365 3.00096 13.4613 3.27346 13.4613C3.54595 13.4613 3.76296 13.2365 3.76296 12.9637L3.76296 2.23986L5.26369 3.77185C5.45508 3.96723 5.76599 3.96727 5.95732 3.77185L2.78395 2.23986Z" fill="#333C4E" stroke="#333C4E" stroke-width="0.2"/>
+                </svg>
+            </button>
+        </div>
+        <div class="rx-modal-footer">
+            <button (click)="onCancelClick()" class="btn btn-light">CANCEL</button>
+            <button
+                class="btn btn-primary"
+                (click)="onApplyClick()">
+                APPLY
+            </button>
+        </div>
+    </div>
+    <ng-template #progressTemplate>
+        <div class="progress-wrapper">
+            <div class="progress-container">
+                <p>It takes a few seconds to generate the comparison</p>
+                <div class="progress"><div></div></div>
+            </div>
+        </div>
+    </ng-template>
+</rx-modal-dialog>

@@ -1,0 +1,53 @@
+<rx-modal-dialog>
+    <div class="confirm-modal-container print-modal">
+        <div class="rx-modal-dialog-header">
+            <img (click)="cancel();" class="close" src="/assets/images/close-modal-ico.svg" />
+            <span class="title">PRINT DOCUMENT</span>
+        </div>
+        <div class="body print-document">
+            <!-- <p style="margin-top: 0;">Select pages to print</p>
+            <div *ngFor="let page of pages; let i = index">
+                <input
+                  type="radio"
+                  [value]="page.value"
+                  [(ngModel)]="selectedPage"
+                  [id]="'radioOption' + i"
+                  name="radioGroup"
+                />
+                <label [for]="'radioOption' + i">{{ page.label }}</label>
+            </div> -->
+            <!-- <div class="print-switch">
+                <span>Include all annotations</span>
+                <rx-switch
+                    [checked]="includeAnnotations"
+                    (change)="onIncludeAnnotationsChange($event)">
+                </rx-switch>
+            </div> -->
+           <!--  <div class="print-switch">
+                <span>Paste a watermark into a file</span>
+                <rx-switch
+                    [checked]="pasteWatermark"
+                    (change)="onWatermarkChange($event)">
+                </rx-switch>
+            </div> -->
+            <p>Select paper size</p>
+            <rx-dropdown
+                [options]="paperSize"
+                [value]="selectedPaperSize"
+                [displayField]="'value'"
+                (valueChange)="onPaperSizeSelect($event)">
+            </rx-dropdown>
+            <p class="select-paper-orientation">Select paper orientation</p>
+            <rx-dropdown
+                [options]="paperOrientation"
+                [value]="selectedPaperOrientation"
+                [displayField]="'value'"
+                (valueChange)="onPaperOrientationSelect($event)">
+            </rx-dropdown>
+        </div>
+        <div class="footer">
+            <button (click)="cancel()" class="btn btn-light">CANCEL</button>
+            <button (click)="onPrint()" class="btn btn-primary">PRINT</button>
+        </div>
+    </div>
+</rx-modal-dialog>

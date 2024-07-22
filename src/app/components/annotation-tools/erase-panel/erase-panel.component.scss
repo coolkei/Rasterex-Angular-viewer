@@ -1,0 +1,39 @@
+@import "../../../../assets/scss/config.scss";
+
+.rx-erase-panel-container {
+    position: fixed;
+    right: 90px;
+    top: 465px;
+    width: 224px;
+    height: auto;
+    padding: 0px 12px;
+    border-radius: 4px;
+    border: 1px solid #EDF1F2;
+    box-shadow: 0px 0px 7px 2px #48484814;
+    background-color: #FFFFFF;
+    box-sizing: content-box;
+
+    .slider-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+
+        .slider {
+            flex-grow: 1;
+        }
+
+        .value {
+            border-radius: 4px;
+            border: 1px solid #EDF1F2;
+            padding: 8px 12px;
+            font-size: 14px;
+            line-height: 22px;
+            font-weight: 400;
+            color: $main;
+            max-width: 36px;
+            min-width: 36px;
+            text-align: center;
+        }
+    }
+}

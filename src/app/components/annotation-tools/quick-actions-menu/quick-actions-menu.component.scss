@@ -1,0 +1,98 @@
+@import "../../../../assets/scss/config.scss";
+
+.quick-actions-container {
+    position: fixed;
+    z-index: 9;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    ul.menu {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        gap: 10px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 8px 0px #333C4E33;
+        margin: 0;
+        padding: 10px;
+        list-style: unset;
+        list-style-type: none;
+
+        &::after {
+            content: "";
+            position: absolute;
+           // bottom: -6px;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            //rotate: 45deg;
+            box-shadow: 1px 1px 1px #EDF1F2;
+            box-sizing: border-box;
+            z-index: 0;
+            background-color: #FFFFFF;
+        }
+
+        &:not(.bottom) {
+            &::after {
+                bottom: -6px;
+                rotate: 45deg;
+            }
+        }
+
+        &.bottom {
+            &::after {
+                top: -6px;
+                rotate: 220deg;
+            }
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: .1s;
+        }
+
+        li:hover, .is-link {
+            background-color: $accent;
+        }
+
+        li:hover img, .is-link img {
+            filter: brightness(0) invert(1);
+        }
+    }
+}
+
+.add-link-modal {
+        max-width: fit-content;
+
+        .rx-modal-dialog-header {
+            height: 40px; 
+            align-items: end;
+
+            img {
+                right: 14px;
+                top: 10px;
+            }
+        }
+
+        .body {
+            padding: 2px 24px 34px;
+
+            p {
+                color: #A4ABAE; 
+                font-size: 14px; 
+                font-weight: 400; 
+                margin-bottom: 8px;
+            }
+        }
+    }

@@ -1,0 +1,36 @@
+@import "../../../../assets/scss/config.scss";
+
+.stamp-panel-container {
+    padding: 0 12px 12px 12px;
+    box-sizing: border-box;
+
+    section {
+        h4 {
+            margin: 12px 0;
+            color: #A4ABAE;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 16px;
+        }
+    }
+
+    .templates-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .add-custom-stamp {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 12px 0;
+        font-size: 12px;
+        color: $main;
+
+        img {
+            cursor: pointer;
+        }
+    }
+}

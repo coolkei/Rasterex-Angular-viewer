@@ -1,0 +1,17 @@
+<div *ngIf="visible" class="rx-erase-panel-container">
+    <rx-accordion [collapsing]="false" [expandAll]="true">
+        <rx-accordion-item [title]="'Thickness'">
+            <ng-template accordionContent>
+                <div class="slider-container">
+                    <ngx-slider
+                        class="slider"
+                        [(value)]="strokeThickness"
+                        [options]="{floor: 0, ceil: 12, hideLimitLabels: true, hidePointerLabels: true, showSelectionBar: true }"
+                        (userChange)="onStrokeThicknessChange()">
+                    </ngx-slider>
+                    <span class="value">{{strokeThickness}}pt</span>
+                </div>
+            </ng-template>
+        </rx-accordion-item>
+    </rx-accordion>
+</div>

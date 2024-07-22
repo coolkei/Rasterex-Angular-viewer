@@ -1,0 +1,10 @@
+<div *ngIf="opened" class="rx-modal-dialog-wrapper">
+    <div
+        class="rx-modal-dialog-container"
+        [class.position-custom]="position"
+        [ngStyle]="position ? { 'top.px': position.top, 'right.px': position.right } : {}">
+        <div class="rx-modal-dialog-body">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

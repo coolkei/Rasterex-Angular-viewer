@@ -1,0 +1,132 @@
+@import "../../../../assets/scss/config.scss";
+
+rx-modal-dialog {
+    ::ng-deep {
+        .rx-modal-dialog-wrapper {
+            z-index: 9998!important;
+            backdrop-filter: blur(3px)!important;
+        }
+    }
+}
+
+.rx-modal-body {
+    position: relative;
+
+    .grid {
+        display: grid;
+        grid-template-columns: 212px 1fr 1fr;
+        gap: 4px;
+
+        .header {
+            color: #A4ABAE;
+            font-size: 14px;
+        }
+
+        .cell {
+            border: 1px solid #EDF1F2;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 6px 8px;
+            box-sizing: border-box;
+
+            &.color-main {
+                color: $main;
+            }
+
+            &.color-secondary {
+                color: #A4ABAE;
+            }
+        }
+
+        rx-dropdown {
+            ::ng-deep {
+                .dropdown-container {
+                    .value {
+                        font-size: 14px;
+                    }
+                    .options-container {
+                        .options-wrapper {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    button.swap {
+        position: absolute;
+        top: 76px;
+        left: 332px;
+        outline: none;
+        width: 24px;
+        height: 24px;
+        background-color: #F5F5F6;
+        cursor: pointer;
+        border: none;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.progress-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+
+    .progress-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+
+        p {
+            color: $main;
+            font-size: 15px;
+            font-weight: 400;
+            margin: 0px;
+        }
+
+        .progress {
+            width: 440px;
+            height: 6px;
+            border-radius: 3px;
+            background-color: #FFFFFF;
+            box-sizing: border-box;
+            position: relative;
+
+            div {
+                position: absolute;
+                background-color: $accent;
+                width: 25%;
+                height: 100%;
+                border-radius: 3px;
+                animation: linear infinite;
+                animation-name: progress;
+                animation-duration: 2.8s;
+                @keyframes progress {
+                    0% {
+                        left: 0;
+                    }
+                    50% {
+                        left: 75%;
+                    }
+                    100% {
+                        left: 0;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,34 @@
+<div class="rx-count-panel-container">
+    <rx-accordion [collapsing]="false" [expandAll]="true">
+        <rx-accordion-item [title]="'Count type'">
+            <ng-template accordionContent>
+                <div class="markup-display-name-section">
+                    <input
+                        type="text"
+                        [(ngModel)]="name"
+                        [placeholder]="placeholder[type] + '...'" />
+                    <span>{{count}}</span>
+                </div>
+                <rx-count-type-select
+                    [value]="type"
+                    (valueChange)="onCountTypeChange($event)">
+                </rx-count-type-select>
+            </ng-template>
+        </rx-accordion-item>
+        <rx-accordion-item [title]="'Colors'">
+            <ng-template accordionContent>
+                <rx-color-picker
+                    [value]="color"
+                    (valueChange)="onColorSelect($event)">
+                </rx-color-picker>
+                <button
+                    class="btn btn-primary"
+                    [disabled]="!count"
+                    style="width: 100%;margin-bottom: 16px;font-weight: normal;"
+                    (click)="onSave()">
+                    Save
+                </button>
+            </ng-template>
+        </rx-accordion-item>
+    </rx-accordion>
+</div>

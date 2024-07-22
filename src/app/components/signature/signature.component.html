@@ -1,0 +1,96 @@
+<ng-container *ngIf="(guiMode$ | async) == 'signature' && visible">
+    <div class="sign-container" [ngStyle]="{ 'left.px': left, 'top.px': top }">
+        <div *ngIf="dropdownPanelOpened" class="sign-dropdown-wrapper">
+            <div class="sign-dropdown-container">
+                <div class="sign-create-new" role="button" (click)="dropdownPanelOpened = false; adoptSignatureOpened = true;">
+                    <span>Create new signature</span>
+                    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 10C3 10.9849 3.19399 11.9602 3.5709 12.8701C3.94781 13.7801 4.50026 14.6069 5.1967 15.3033C5.89314 15.9997 6.71993 16.5522 7.62987 16.9291C8.53982 17.306 9.51509 17.5 10.5 17.5C11.4849 17.5 12.4602 17.306 13.3701 16.9291C14.2801 16.5522 15.1069 15.9997 15.8033 15.3033C16.4997 14.6069 17.0522 13.7801 17.4291 12.8701C17.806 11.9602 18 10.9849 18 10C18 8.01088 17.2098 6.10322 15.8033 4.6967C14.3968 3.29018 12.4891 2.5 10.5 2.5C8.51088 2.5 6.60322 3.29018 5.1967 4.6967C3.79018 6.10322 3 8.01088 3 10Z" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 10H13" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.5 7.5V12.5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="sign-saved-signatures-container">
+                    <h4>Saved signature</h4>
+                    <div *ngIf="signatures?.signature && signatures?.initials; else noSavedSighaturesTemplate" class="signature-list">
+                        <img class="signature-image" [src]="signatures?.signature.src" (click)="onSignatureSelect(signatures?.signature)" />
+                        <div class="separator"></div>
+                        <img class="signature-image" [src]="signatures?.initials.src" (click)="onSignatureSelect(signatures?.initials)" />
+                    </div>
+                    <ng-template #noSavedSighaturesTemplate>
+                        <span class="no-saved-signatures">There are no saved signatures yet.</span>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="applyPanelOpened" class="sign-apply-panel">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_3333_116484)">
+            <circle cx="16" cy="16" r="16" fill="#F09336"/>
+            <path d="M24.5615 21.4011L16.9523 7.56136C16.759 7.21008 16.4028 7 16 7C15.5973 7 15.2411 7.21008 15.0478 7.56136L7.43856 21.4011C7.25422 21.7384 7.26047 22.1363 7.45595 22.4661C7.65282 22.7999 8.00271 22.9989 8.39152 22.9989H23.6085C23.9974 22.9989 24.3473 22.7999 24.5441 22.4661C24.7396 22.1363 24.7459 21.7384 24.5615 21.4011ZM15.8282 12.5794C15.8867 12.5697 15.9444 12.5648 16.0014 12.5648C16.5023 12.5648 16.944 12.9231 17.0288 13.4274C17.049 13.5422 17.0469 13.659 17.0288 13.7675L16.343 17.8417C16.3144 18.01 16.167 18.1296 16.0007 18.1296C15.9819 18.1296 15.9618 18.1282 15.943 18.1248C15.792 18.0998 15.6807 17.9829 15.6571 17.8417L14.9712 13.7675C14.876 13.2048 15.2606 12.6726 15.8282 12.5794ZM16 20.9121C15.4248 20.9121 14.9566 20.4439 14.9566 19.8686C14.9566 19.2934 15.4248 18.8252 16 18.8252C16.5753 18.8252 17.0435 19.2934 17.0435 19.8686C17.0435 20.4439 16.5753 20.9121 16 20.9121Z" fill="white"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_3333_116484">
+            <rect width="32" height="32" rx="4" fill="white"/>
+            </clipPath>
+            </defs>
+        </svg>
+        <div class="place-in-all-blocks-contauner">
+            <p>Click “Apply” button in order to save the signature in the document.</p>
+            <rx-checkbox *ngIf="selectedSignature" [(value)]="placeInAllBlocks" [label]="'Place in all blocks.'"></rx-checkbox>
+        </div>
+        <button class="btn btn-primary" (click)="onApplyClick()">Apply</button>
+        <span class="separator"></span>
+        <img src="/assets/images/close-modal-ico.svg" class="btn-close" (click)="confirmDismissOpened = true;">
+    </div>
+
+    <div *ngIf="quickActionsOpened" class="quick-actions"  [ngStyle]="{ 'left.px': qLeft, 'top.px': qTop }">
+        <ul>
+            <li (click)="dropdownPanelOpened = true; quickActionsOpened = false;">
+                <img src="/assets/images/pen-ico.svg" />
+            </li>
+            <li (click)="confirmDeleteOpened = true; quickActionsOpened = false;">
+                <img src="/assets/images/trash-ico.svg" />
+            </li>
+        </ul>
+    </div>
+
+    <rx-adopt-signature
+        *ngIf="adoptSignatureOpened"
+        [mode]="adoptSignatureMode"
+        (onCancel)="adoptSignatureOpened = false"
+        (onAdopt)="onAdoptSignature($event)">
+    </rx-adopt-signature>
+
+    <rx-modal-dialog *ngIf="confirmDeleteOpened" class="confirm-dialog">
+        <div class="rx-modal-container">
+            <div class="rx-modal-body">
+                <img (click)="confirmDeleteOpened = false;" class="close" src="/assets/images/close-modal-ico.svg" />
+                <p>
+                    Are you sure you want to delete this signature?
+                </p>
+            </div>
+            <div class="rx-modal-footer">
+                <button (click)="confirmDeleteOpened = false" class="btn btn-light">CANCEL</button>
+                <button (click)="onConfirmDelete()" class="btn btn-primary">DELETE</button>
+            </div>
+        </div>
+    </rx-modal-dialog>
+
+    <rx-modal-dialog *ngIf="confirmDismissOpened" class="confirm-dialog">
+        <div class="rx-modal-container">
+            <div class="rx-modal-body">
+                <img (click)="confirmDismissOpened = false;" class="close" src="/assets/images/close-modal-ico.svg" />
+                <p>
+                    Are you sure you want to dismiss signature? If you click “Dismiss button” it will be deleted.
+                </p>
+            </div>
+            <div class="rx-modal-footer">
+                <button (click)="confirmDismissOpened = false" class="btn btn-light">CANCEL</button>
+                <button (click)="onConfirmDismiss()" class="btn btn-primary">DISMISS</button>
+            </div>
+        </div>
+    </rx-modal-dialog>
+</ng-container>

@@ -1,0 +1,71 @@
+@import "../../../../assets/scss/config.scss";
+
+.color-picker-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
+
+    ul.default-colors {
+        margin: 0;
+        display: flex;
+        list-style: none;
+        padding: 0;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 9px;
+
+        li {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            padding: 1px;
+            display: block;
+            cursor: pointer;
+            border: 1px solid transparent;
+            box-sizing: border-box;
+
+            div {
+                width: 100%;
+                height: 100%;
+                border-radius: 4px;
+            }
+
+            &:hover,
+            &.selected {
+                border-color: $accent;
+            }
+        }
+    }
+
+    .custom-color {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+        margin-bottom: 12px;
+        font-size: 12px;
+        color: $main;
+
+        svg {
+            cursor: pointer;
+            path {
+                fill: $accent;
+            }
+        }
+    }
+}
+
+.custom-color-picker-container {
+    background-color: #ffffff;
+    padding: 16px 12px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .buttons-container {
+        display: flex;
+        justify-content: flex-end;
+        gap: 6px;
+    }
+}

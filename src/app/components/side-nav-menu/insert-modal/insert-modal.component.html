@@ -1,0 +1,249 @@
+<rx-modal-dialog *ngIf="visible != 'NONE'">
+    <div class="replace-modal-container replace-modal" *ngIf="loadingStatus === 'NONE'">
+        <ul class="tabbed-menu">
+            <li [class.active]="leftTabIndex === 0" (click)="leftTabIndex = 0">{{visible === 'INSERT' ? "Insert" :
+                "Replace"}} Page(s) from another file</li>
+            <li [class.active]="leftTabIndex === 1" (click)="leftTabIndex = 1" *ngIf="visible === 'INSERT'">Insert Blank
+                Pags</li>
+        </ul>
+        <div class="body">
+            <div class="rx-modal-dialog-header">
+                <img class="close" src="/assets/images/close-modal-ico.svg" (click)="close()" />
+                <span class="title">{{visible === 'INSERT' ? "Insert New Page(s)" : "Replace Page(s)"}}</span>
+            </div>
+            <div [ngSwitch]=" leftTabIndex">
+                <div class="drag-drop" *ngSwitchDefault="">
+                    <rx-dnd-zone (onDrop)="onDrop($event)">
+                        <div class="dnd-content" (click)="onChooseClick()">
+                            <input type="file" style="display: none;" id="fileToUpload" onclick="this.value = null;"
+                                #fileToUpload (change)="handleFileUpload($event)" />
+                            <img src="/assets/images/files-img.svg" />
+                            <p class="dnd-text">Drag & drop a file here or</p>
+                            <span class="dnd-choose">CHOOSE ON COMPUTER</span>
+                        </div>
+                    </rx-dnd-zone>
+                    <div *ngIf="!selectedFileName; else fileUploadProgress" class="acceptable-formats">
+                        <h4>Acceptable formats</h4>
+                        <ul>
+                            <li>PDF</li>
+                            <li>Microsoft Office (doc, docx, xlsl, pptx)</li>
+                            <li>Images (jpg, png, tif, bmp)</li>
+                            <li>Other text formats like </li>
+                        </ul>
+                    </div>
+                    <ng-template #fileUploadProgress>
+                        <div *ngIf="selectedFileName" class="container-file-upload">
+                            <div class="info-file-gallery">
+                                <div class="file">
+                                    <img src="/assets/images/file-ico.svg" />
+                                    <div class="selected-file">
+                                        <div class="name">{{ selectedFileName }}</div>
+                                        <div class="size">{{ fileSize + ' ' + fileSizeUnits }} </div>
+                                    </div>
+                                </div>
+                                <img *ngIf="!isUploadFile" class="close" src="/assets/images/close-modal-ico.svg"
+                                    (click)="clearData()" />
+                            </div>
+                            <div class="btn-file-gallery">
+                                <button *ngIf="!isUploadFile" class="btn btn-light"
+                                    (click)="clearData()">CANCEL</button>
+                                <button class="btn btn-primary" (click)="uploadFile()"
+                                    [disabled]="isUploadFile">PROCESS</button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="insert-blank" *ngSwitchCase="1">
+                    <div>
+
+                        <div class="page-location">
+                            <p>Page Placement</p>
+                            <div class="group">
+                                <div class="input">
+                                    <span>Current Page</span>
+                                    <input type="text" (blur)="onBlurPageRange()" [(ngModel)]="pageRangeStr"
+                                        autocomplete="off" (change)="validate()" />
+                                </div>
+                                <div class="input">
+                                    <span>Number of Pages to be inserted</span>
+                                    <input type="number" min="0" [(ngModel)]="numberPages" autocomplete="off"
+                                        (change)="validate()" />
+                                </div>
+                            </div>
+                            <span>Total {{numpages}} Pages</span>
+                            <rx-radio-button [options]="radioOptions" class="radio-group"
+                                [(selectedValue)]="selectedRadioValue"
+                                (selectionChange)="onRadioSelectionChange($event)">
+                            </rx-radio-button>
+                        </div>
+                        <div class="page-dimension">
+                            <p>Page Dimensions</p>
+                            <div class="group">
+                                <div class="input">
+                                    <span>Presets</span>
+                                    <rx-dropdown class="select-matric-unit" [placeholder]="'Select page size...'"
+                                        [options]="presetsOptions" [value]="selectedPresets"
+                                        (valueChange)="onPresetsSelectionChange($event)">
+                                    </rx-dropdown>
+                                </div>
+                                <div *ngIf="selectedPresets.value != '6'" class="input"></div>
+                                <div *ngIf="selectedPresets.value === '6'" class="input">
+                                    <span>Units</span>
+                                    <rx-dropdown class="select-matric-unit" [placeholder]="'Select unit...'"
+                                        [options]="unitsOptions" [value]="selectedUnits"
+                                        (valueChange)="onUnitsSelectionChange($event)">
+                                    </rx-dropdown>
+                                </div>
+                            </div>
+                            <div class="group" *ngIf="selectedPresets.value === '6'" style="margin-top: 8px;">
+                                <div class="input">
+                                    <span>Width</span>
+                                    <input type="number" [(ngModel)]="customWidth" autocomplete="off"
+                                        (change)="validate()" />
+                                </div>
+                                <div class="input">
+                                    <span>Height</span>
+                                    <input type="number" [(ngModel)]="customHeight" autocomplete="off"
+                                        (change)="validate()" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control">
+                        <button [disabled]="isInvalid" (click)="addPages()">Add Page(s)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="loadingStatus === 'LOADED'" class="opened-pages">
+        <div class="header">
+            <div class="header-title">
+                <svg (click)="loadingStatus = 'NONE'" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                    viewBox="0 0 24 24">
+                    <path fill="#A4ABAE"
+                        d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42a.996.996 0 0 0-1.41 0l-6.59 6.59a.996.996 0 0 0 0 1.41l6.59 6.59a.996.996 0 1 0 1.41-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1" />
+                </svg>
+                <span class="title">Select Pages to {{visible === 'INSERT' ? "Insert" : "Replace"}}
+                    ({{selectedCount()}})</span>
+            </div>
+            <img class="close" src="/assets/images/close-modal-ico.svg" (click)="close()" />
+        </div>
+        <div class="body">
+            <div class="group" *ngIf="visible ===  'INSERT'">
+                <div class="input" style="width: 50%;">
+                    <span>Page Placement</span>
+                    <rx-radio-button [options]="radioOptions" [class]="''" [(selectedValue)]="selectedRadioValue"
+                        (selectionChange)="onRadioSelectionChange($event)">
+                    </rx-radio-button>
+                </div>
+                <div class="input">
+                    <span>Current Page</span>
+                    <input type="number" max="{{numpages}}" min="0" [(ngModel)]="currentPage" autocomplete="off"
+                        (change)="validate()" />
+                </div>
+                <div class="input">
+                    <span>Presets</span>
+                    <rx-dropdown class="select-matric-unit" [placeholder]="'Select page size...'"
+                        [options]="presetsOptions.slice(0, presetsOptions.length - 1)" [value]="selectedPresets"
+                        (valueChange)="onPresetsSelectionChange($event)">
+                    </rx-dropdown>
+                </div>
+            </div>
+            <div class="group-replace" *ngIf="visible === 'REPLACE'">
+                <span>Replace Page</span>
+                <input type="text" [(ngModel)]="pageRangeStr" (blur)="onBlurPageRange( )" />
+                <span class="bold">{{" "}}</span>
+                <span>with page(s)</span>
+                <input type="text" [(ngModel)]="checkedPageRangeStr" (blur)="onBlurCheckPageRange()" />
+                <span class="bold">{{" "}}</span>
+                <span>Presets</span>
+                <rx-dropdown class="select-matric-unit" [placeholder]="'Select page size...'"
+                    [options]="presetsOptions.slice(0, presetsOptions.length) - 1" [value]="selectedPresets"
+                    (valueChange)="onPresetsSelectionChange($event)">
+                </rx-dropdown>
+            </div>
+            <div class="thumbnail-list">
+                <div (click)="onClickPage(i)" class="thumbnail" *ngFor="let thumbnail of thumbnails; index as i">
+                    <canvas [thumbnail]="thumbnail"></canvas>
+                    <span>{{i + 1}}</span>
+                    <rx-checkbox class="check" [(value)]="checkedPageList[i]"
+                        (valueChange)="onClickPage(i)"></rx-checkbox>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <button (click)="selectPages()" class="select">
+                {{selectedCount() > 0? "Deselect" : "Select"}} All
+            </button>
+            <button (click)="importPages()" [disabled]="selectedCount() === 0" class="add">
+                {{visible === 'INSERT' ? "Add" : "Replace"}} Page(s)
+            </button>
+        </div>
+    </div>
+    <div *ngIf="loadingStatus === 'LOADING'" class="loading">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+            <circle cx="12" cy="3" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddle0" attributeName="r"
+                    begin="0;svgSpinners6DotsScaleMiddle2.end-0.5s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="16.5" cy="4.21" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddle1" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddle0.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="7.5" cy="4.21" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddle2" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddle4.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="19.79" cy="7.5" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddle3" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddle1.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="4.21" cy="7.5" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddle4" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddle6.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="21" cy="12" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddle5" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddle3.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="3" cy="12" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddle6" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddle8.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="19.79" cy="16.5" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddle7" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddle5.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="4.21" cy="16.5" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddle8" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddlea.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="16.5" cy="19.79" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddle9" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddle7.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="7.5" cy="19.79" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddlea" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddleb.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+            <circle cx="12" cy="21" r="0" fill="#31BD59">
+                <animate id="svgSpinners6DotsScaleMiddleb" attributeName="r"
+                    begin="svgSpinners6DotsScaleMiddle9.begin+0.1s" calcMode="spline" dur="0.6s"
+                    keySplines=".27,.42,.37,.99;.53,0,.61,.73" values="0;2;0" />
+            </circle>
+        </svg>
+    </div>
+</rx-modal-dialog>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" data-critters-container>
+<head>
+  <meta charset="utf-8">
+  <title>Rasterex Viewer</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script type="text/javascript" src="assets/scripts/jquery-2.1.0.min.js"></script>
+  <script type="text/javascript" src="assets/scripts/rxconfig.js"></script>
+  <script type="text/javascript" src="assets/scripts/rxconstants.js"></script>
+  <script type="text/javascript" src="assets/scripts/rxcorefunctions.min.js"></script>  
+<style>:root{--accent:#31BD59;--accent-secondary:#F0F7F9;--main:#333C4E;--secondary:#A4ABAE;--light-secondary:#EDF1F2;--inactive:#DBDBDB;--background:#D6DADC;--background-light:#F0F7F9;--background-secondary:#F5F5F5;--side-nav-background:#F0F7F9;--side-nav-background-active:#FFFFFF;--side-nav-color:#A6ADB0;--side-nav-color-active:#31BD59;--side-nav-panel-background:#FFFFFF;--top-nav-background:#FFFFFF;--top-nav-color:#333C4E;--top-nav-background-active:#F0F7F9;--top-nav-color-active:#333C4E;--top-nav-border-bottom-color-active:transparent;--toolbar-background:#FFFFFF;--toolbar-color:#333C4E;--toolbar-background-active:#31BD59}@font-face{font-family:OpenSans;src:url(OpenSans-Regular.4b2dbd1335c773c8.ttf)}body,html{margin:0;padding:0;background-color:var(--background);font-family:OpenSans;height:100%;overflow:hidden}*::-webkit-scrollbar{width:4px;height:4px}*::-webkit-scrollbar-track{background:transparent;border-radius:3px}*::-webkit-scrollbar-thumb{background:rgba(237,241,242,.9);border-radius:2px}*::-webkit-scrollbar-thumb:hover{background:#EDF1F2}@media print{body *{display:none}#printdiv{display:block}}@media screen{#printdiv{display:none}}</style>
+<style>
+.column1 {
+  float: left;
+  width: 20%;
+  height: 100vh;
+}
+
+.column2 {
+  float: left;
+  width: 80%;
+  height: 100vh;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}   
+</style>
+
+<link rel="stylesheet" href="styles.e63bcbdc3149e91d.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.e63bcbdc3149e91d.css"></noscript></head>
+<body>
+   
+<div class="row">
+  <div class="column1">
+   <center>
+   <h3>Floorplans</h3>
+   <a href="javascript:OpenFile1();">DWG</a><p>
+   <a href="javascript:OpenFile2();">PDF</a><p>
+   <h3>XREFS</h3>
+   <a href="javascript:OpenFile4();">DWG XREF (object)</a><br>
+   <a href="javascript:OpenFile5();">DGN XREF (object)</a><br>
+   <h3>BIM</h3>
+   <a href="javascript:OpenFile3();">IFC</a><br>
+   <h3>IFC Operations</h3>
+   <a href="javascript:IsolateDoors();">Isolate Doors</a><br>
+   <a href="javascript:HighlightDoors();">Highlight Doors</a><br>
+   <a href="javascript:ResetModel();">Reset Model</a><br>
+   </center>
+   </div>
+  <div class="column2">
+   <iframe src="index.html" height="100%" width="100%" id="rxview"></iframe>
+</div>
+</div>
+
+<script>
+   function OpenFile1()
+   {
+      document.getElementById('rxview').contentWindow.RxCore.openFile("http://terjewin10/rxweb/drawings/test.dwg");
+   }
+   function OpenFile2()
+   {
+      document.getElementById('rxview').contentWindow.RxCore.openFile("http://terjewin10/rxweb/drawings/test.pdf");
+   }
+   function OpenFile3()
+   {
+      document.getElementById('rxview').contentWindow.RxCore.openFile("http://terjewin10/rxweb/drawings/NordicProsjektboliger.ifc");
+   }
+   
+   function OpenFile4()
+   {
+      var myfileobject = 
+      {
+         filepath: "http://terjewin10/Rxweb/drawings/xreftest/HD-ASSM.DWG",
+         cacheid: "69e34260-c381-47e0-bca0-04089471d010",
+         //xrefurl: "http://terjewin10:3000/xrefs/",
+         displayname: "test.dwg",
+         mime: "application/dwg"
+      };
+      document.getElementById('rxview').contentWindow.RxCore.openFile(myfileobject);
+   }   
+   
+   function OpenFile5()
+   {
+      var myfileobject = 
+      {
+         filepath: "http://terjewin10:3000/2/ELE-1279718-000.dgn",
+         cacheid: "69e34260-c381-47e0-bca0-14089471d011",
+         displayname: "ELE-1279718-000.dgn",
+         mime: "application/dgn"
+      };
+      document.getElementById('rxview').contentWindow.RxCore.openFile(myfileobject);
+   }
+
+   function IsolateDoors()
+   {
+      document.getElementById('rxview').contentWindow.RxCore.reset3DModel();
+      document.getElementById('rxview').contentWindow.RxCore.set3DBlockStateAll(false);
+      var doors = document.getElementById('rxview').contentWindow.RxCore.search3dAttributes("IfcDoor");
+      for (var i=0; i<doors.length; i++)
+      {
+         document.getElementById('rxview').contentWindow.RxCore.set3DBlockState(doors[i].userData.name, true );
+         document.getElementById('rxview').contentWindow.RxCore.setBlockColor( doors[i].userData.name, "red", true );
+      }
+   }
+   function HighlightDoors()
+   {
+      document.getElementById('rxview').contentWindow.RxCore.reset3DModel();
+      document.getElementById('rxview').contentWindow.RxCore.transparency3DEx(0.3);     
+      var doors = document.getElementById('rxview').contentWindow.RxCore.search3dAttributes("IfcDoor");
+      for (var i=0; i<doors.length; i++)
+      {
+         document.getElementById('rxview').contentWindow.RxCore.set3DBlockState(doors[i].userData.name, true );
+         document.getElementById('rxview').contentWindow.RxCore.set3DBlockTransparency( doors[i].userData.name, 1.0, true );
+         document.getElementById('rxview').contentWindow.RxCore.setBlockColor( doors[i].userData.name, "red", true );
+      }
+   }
+   function ResetModel()
+   {
+      document.getElementById('rxview').contentWindow.RxCore.reset3DModel();
+   }
+   
+</script>
+<script src="runtime.4df14fda71534f90.js" type="module"></script><script src="polyfills.5c7903f930c0f6ac.js" type="module"></script><script src="scripts.f7c198e71ccd5b5e.js" defer></script><script src="main.742c4fd407e5ad53.js" type="module"></script></body>
+<div id="printdiv"></div>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+<div
+    class="dnd-zone-wrapper"
+    [class.dnd-zone-active]="dragging">
+    <ng-content></ng-content>
+    <div
+        class="dnd-zone"
+        dnd-zone
+        (onDrop)="onDrop($event)"
+        (onDragLeave)="onDragLeave()"
+        (onDropError)="onDropError($event)">
+    </div>
+</div>

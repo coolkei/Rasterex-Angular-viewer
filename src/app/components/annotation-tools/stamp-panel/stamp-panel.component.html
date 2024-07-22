@@ -1,0 +1,34 @@
+<rx-panel [title]="'Stamp'" (onClose)="onPanelClose()">
+    <div class="stamp-panel-container">
+        <section>
+            <h4>Templates</h4>
+            <div class="templates-list">
+                <img
+                    *ngFor="let template of templates;"
+                    [stampTemplate]="template"
+                    [src]="template.src"
+                    [ngStyle]="{ 'width.px': template.width, 'height.px': template.height }" />
+            </div>
+        </section>
+    </div>
+</rx-panel>
+
+<rx-modal-dialog [opened]="opened">
+    <div class="confirm-modal-container" style="max-width: fit-content;">
+        <div class="rx-modal-dialog-header">
+            <img (click)="opened = false;" class="close" style="right: 14px; top: 10px;" src="/assets/images/close-modal-ico.svg" />
+            <span class="title">Add stamp</span>
+        </div>
+        <div class="body" style="width: 364px; box-sizing: border-box;">
+            <div class="btn-group" role="group">
+                <button [class.selected]="activeIndex == 0" (click)="activeIndex=0">Text</button>
+                <button [class.selected]="activeIndex == 1" (click)="activeIndex=1">Stroke</button>
+                <button [class.selected]="activeIndex == 2" (click)="activeIndex=2">Fill</button>
+            </div>
+        </div>
+        <div class="footer">
+            <button (click)="opened = false;" class="btn btn-light">CANCEL</button>
+            <button class="btn btn-primary">SAVE</button>
+        </div>
+    </div>
+</rx-modal-dialog>

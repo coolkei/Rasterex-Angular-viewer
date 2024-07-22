@@ -1,0 +1,191 @@
+<rx-panel *ngIf="visible" [title]="title" (onClose)="onClose()">
+    <div class="properties-panel-container">
+        <ul *ngIf="isMainTabsVisible" class="nav-tabs">
+            <li [class.active]="mainTabActiveIndex == 0" (click)="mainTabActiveIndex=0">Details</li>
+            <li [class.active]="mainTabActiveIndex == 1" (click)="mainTabActiveIndex=1">Info</li>
+        </ul>
+        <div [ngSwitch]="mainTabActiveIndex" class="main-content" [class.no-padding]="mainTabActiveIndex == 1">
+            <ng-container *ngSwitchDefault>
+                <div *ngIf="isPropertyTabsVisible" class="btn-group" role="group">
+                    <button *ngIf="isPropertyTextVisible" [class.selected]="propertyTabActiveIndex == 0" (click)="propertyTabActiveIndex=0">Text</button>
+                    <button [class.selected]="propertyTabActiveIndex == 1" (click)="propertyTabActiveIndex=1">Stroke</button>
+                    <button [class.selected]="propertyTabActiveIndex == 2" (click)="propertyTabActiveIndex=2">Fill</button>
+                </div>
+                <div [ngSwitch]="propertyTabActiveIndex" class="sub-content">
+                    <ng-container *ngSwitchCase="0">
+                        <section>
+                            <textarea
+                                [value]="text"
+                                (keyup)="onTextChange($event)"
+                                placeholder="Insert text here...">
+                            </textarea>
+                        </section>
+                        <section>
+                            <h4>Text Style</h4>
+                            <rx-text-style-select
+                                [value]="font"
+                                (valueChange)="onTextStyleSelect($event)">
+                            </rx-text-style-select>
+                        </section>
+                        <section>
+                            <h4>Colors</h4>
+                            <rx-color-picker
+                                [value]="color"
+                                (valueChange)="onColorSelect($event)">
+                            </rx-color-picker>
+                        </section>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="1">
+                        <!--  <section>
+                            <h4>Opacity</h4>
+                            <div class="slider-container">
+                                <ngx-slider
+                                    class="slider"
+                                    [(value)]="strokeOpacity"
+                                    [options]="{floor: 0, ceil: 100, hideLimitLabels: true, hidePointerLabels: true, showSelectionBar: true }"
+                                    (userChange)="onStrokeOpacityChange()">
+                                </ngx-slider>
+                                <span class="value">{{strokeOpacity}}%</span>
+                            </div>
+                        </section> -->
+                        <section *ngIf="currentType == 7">
+                            <h4>Type</h4>
+                            <div class="btn-group" role="group">
+                                <button [class.selected]="lengthMeasureType == 0" (click)="onLengthMeasureTypeChange(0)">
+                                    <img src="/assets/images/measure-length-no-arrow-ico.svg" />
+                                    <span>No arrow</span>
+                                </button>
+                                <button [class.selected]="lengthMeasureType == 1" (click)="onLengthMeasureTypeChange(1)">
+                                    <img src="/assets/images/measure-length-ico.svg" />
+                                    <span>Open Arrow</span>
+                                </button>
+                            </div>
+                        </section>
+                        <!-- <section *ngIf="isPropertyArrowsVisible"> -->
+                        <section *ngIf="currentType == 6">
+                            <div class="btn-group" role="group" style="margin-top: 16px;">
+                                <button [class.selected]="annotation?.subtype == 3" (click)="onArrowStyleSelect(3)">
+                                    <img src="/assets/images/arrow-filled-both-end-ico.svg"/></button>
+                                <button [class.selected]="annotation?.subtype == 1" (click)="onArrowStyleSelect(1)"><img src="/assets/images/arrow-filled-single-end-ico.svg" /></button>
+                                <button [class.selected]="annotation?.subtype == 2" (click)="onArrowStyleSelect(2)"><img src="/assets/images/arrow-both-end-ico.svg" /></button>
+                                <button [class.selected]="annotation?.subtype == 0" (click)="onArrowStyleSelect(0)"><img src="/assets/images/arrow-single-end-ico.svg" /></button>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h4>Thickness</h4>
+                            <div class="slider-container">
+                                <ngx-slider
+                                    class="slider"
+                                    [(value)]="strokeThickness"
+                                    [options]="{floor: 0, ceil: 12, hideLimitLabels: true, hidePointerLabels: true, showSelectionBar: true }"
+                                    (userChange)="onStrokeThicknessChange()">
+                                </ngx-slider>
+                                <span class="value">{{strokeThickness}}pt</span>
+                            </div>
+                        </section>
+                        <section>
+                            <h4>Style</h4>
+                            <rx-line-style-select
+                                [value]="strokeLineStyle"
+                                (valueChange)="onStrokeLineStyleSelect($event)">
+                            </rx-line-style-select>
+                        </section>
+                        <section>
+                            <h4>Colors</h4>
+                            <rx-color-picker
+                                [value]="strokeColor"
+                                (valueChange)="onStrokeColorSelect($event)">
+                            </rx-color-picker>
+                        </section>
+                        <section>
+                            <div class="snap-section">
+                                <span>Snap</span>
+                                <rx-switch
+                                    [checked]="snap"
+                                    (change)="onSnapChange($event)">
+                                </rx-switch>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="snap-section">
+                                <span>Lock</span>
+                                <rx-switch
+                                    [checked]="locked"
+                                    (change)="onLockChange($event)">
+                                </rx-switch>
+                            </div>
+                        </section>
+                        
+
+                    </ng-container>
+                    <ng-container *ngSwitchCase="2">
+                        <ng-container *ngIf="markup?.type == 13">
+                            <section>
+                                <div class="markup-display-name-container">
+                                    <input
+                                        type="text"
+                                        [(ngModel)]="displayName"
+                                        (ngModelChange)="onDisplayNameChange($event)"
+                                        [placeholder]="placeholder[markup?.subtype] + '...'" />
+                                    <span>{{infoData['Count']}}</span>
+                                </div>
+                                <h4>Style</h4>
+                                <rx-count-type-select
+                                    [value]="markup?.subtype"
+                                    (valueChange)="onCountTypeChange($event)">
+                                </rx-count-type-select>
+                            </section>
+                        </ng-container>
+                        <section *ngIf="isFillOpacityVisible">
+                            <h4>Opacity</h4>
+                            <div class="slider-container">
+                                <ngx-slider
+                                    class="slider"
+                                    [(value)]="fillOpacity"
+                                    [options]="{floor: 0, ceil: 100, hideLimitLabels: true, hidePointerLabels: true, showSelectionBar: true }"
+                                    (userChange)="onFillOpacityChange()">
+                                </ngx-slider>
+                                <span class="value">{{fillOpacity}}%</span>
+                            </div>
+                        </section>
+                        <section>
+                            <h4>Colors</h4>
+                            <rx-color-picker
+                                [value]="fillColor"
+                                (valueChange)="onFillColorSelect($event)">
+                            </rx-color-picker>
+                        </section>
+                        <section>
+                            <div class="snap-section">
+                                <span>Snap</span>
+                                <rx-switch
+                                    [checked]="snap"
+                                    (change)="onSnapChange($event)">
+                                </rx-switch>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="snap-section">
+                                <span>Lock</span>
+                                <rx-switch
+                                    [checked]="locked"
+                                    (change)="onLockChange($event)">
+                                </rx-switch>
+                            </div>
+                        </section>
+
+                    </ng-container>
+                </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="1">
+                <div *ngIf="isInfoTabVisible" class="info-container">
+                    <div class="header">Attribute</div><div class="header">Value</div>
+                    <ng-container *ngFor="let item of infoData | keyvalue">
+                        <div class="row-header">{{item.key}}</div><div>{{item.value}}</div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</rx-panel>

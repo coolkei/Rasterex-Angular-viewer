@@ -1,0 +1,96 @@
+@import "../../../../assets/scss/config.scss";
+
+rx-modal-dialog {
+    ::ng-deep {
+        .rx-modal-dialog-wrapper {
+            z-index: 9998!important;
+            backdrop-filter: blur(3px)!important;
+        }
+    }
+}
+
+.rx-modal-body {
+    position: relative;
+
+    .grid {
+        display: grid;
+        grid-template-columns: 212px 1fr 1fr;
+        gap: 4px;
+
+        .header {
+            color: #A4ABAE;
+            font-size: 14px;
+        }
+
+        .cell {
+            border: 1px solid #EDF1F2;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 400;
+            padding: 6px 8px;
+            box-sizing: border-box;
+
+            &.color-main {
+                color: $main;
+            }
+
+            &.color-secondary {
+                color: #A4ABAE;
+            }
+        }
+
+        rx-dropdown {
+            ::ng-deep {
+                .dropdown-container {
+                    .value {
+                        font-size: 14px;
+                    }
+                    .options-container {
+                        .options-wrapper {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .select-new-document {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        height: 36px;
+        box-sizing: border-box;
+        border-bottom: 1px solid $background-light;
+        padding: 8px 12px;
+
+        span {
+            flex-grow: 1;
+            color: $accent;
+        }
+
+        svg {
+            path {
+                stroke: $accent;
+            }
+        }
+    }
+
+    button.swap {
+        position: absolute;
+        top: 76px;
+        left: 332px;
+        outline: none;
+        width: 24px;
+        height: 24px;
+        background-color: #F5F5F6;
+        cursor: pointer;
+        border: none;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

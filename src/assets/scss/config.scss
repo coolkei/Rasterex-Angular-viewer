@@ -1,0 +1,56 @@
+:root {
+    --accent: #31BD59;
+    --accent-secondary: #F0F7F9;
+    --main: #333C4E;
+    --secondary: #A4ABAE;
+    --light-secondary: #EDF1F2;
+    --inactive: #DBDBDB;
+
+    --background: #D6DADC;
+    --background-light: #F0F7F9;
+    --background-secondary: #F5F5F5;
+
+    --side-nav-background: #F0F7F9;
+    --side-nav-background-active: #FFFFFF;
+    --side-nav-color: #A6ADB0;
+    --side-nav-color-active: #31BD59;
+    --side-nav-panel-background: #FFFFFF;
+
+    --top-nav-background: #FFFFFF;
+    --top-nav-color: #333C4E;
+    --top-nav-background-active: #F0F7F9;
+    --top-nav-color-active: #333C4E;
+    --top-nav-border-bottom-color-active: transparent;
+
+    --toolbar-background: #FFFFFF;
+    --toolbar-color: #333C4E;
+    --toolbar-background-active: #31BD59;
+}
+
+
+$accent: var(--accent);
+$accent-secondary: var(--accent-secondary);
+$main: var(--main);
+$secondary: var(--secondary);
+$light-secondary: var( --light-secondary);
+$inactive: var(--inactive);
+
+$background: var(--background);
+$background-light: var(--background-light);
+$background-secondary: var(--background-secondary);
+
+$side-nav-background: var(--side-nav-background);
+$side-nav-background-active: var(--side-nav-background-active);
+$side-nav-color: var(--side-nav-color);
+$side-nav-color-active: var(--side-nav-color-active);
+$side-nav-panel-background: var(--side-nav-panel-background);
+
+$top-nav-background: var(--top-nav-background);
+$top-nav-color: var(--top-nav-color);
+$top-nav-background-active: var(--top-nav-background-active);
+$top-nav-color-active: var(--top-nav-color-active);
+$top-nav-border-bottom-color-active: var(--top-nav-border-bottom-color-active);
+
+$toolbar-background: var(--toolbar-background);
+$toolbar-color: var(--toolbar-color);
+$toolbar-background-active: var(--toolbar-background-active);

@@ -1,0 +1,10 @@
+.accordion-toggle-btn {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in;
+
+    &.active {
+        transform: rotate(180deg);
+    }
+}

@@ -1,0 +1,40 @@
+<div class="color-picker-container">
+    <ul class="default-colors">
+        <li
+            *ngFor="let color of defaultColors"
+            role="option"
+            class="color"
+            [class.selected]="color == value"
+            (click)="onColorSelect(color)">
+            <div [style.background-color]="color"></div>
+        </li>
+    </ul>
+    <div *ngIf="allowCustomColor" class="custom-color">
+        <svg (click)="opened = true" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="19" height="19" rx="3.5" fill="white" stroke="#EDF1F2"/>
+            <g clip-path="url(#clip0_1226_21711)">
+            <path d="M14.5 9.5H10.5V5.49997C10.5 5.22403 10.276 5 9.99997 5C9.72403 5 9.5 5.22403 9.5 5.49997V9.5H5.49997C5.22403 9.5 5 9.72403 5 9.99997C5 10.276 5.22403 10.5 5.49997 10.5H9.5V14.5C9.5 14.776 9.72403 15 9.99997 15C10.276 15 10.5 14.776 10.5 14.5V10.5H14.5C14.776 10.5 15 10.276 15 9.99997C15 9.72403 14.776 9.5 14.5 9.5Z" />
+            </g>
+            <defs>
+            <clipPath id="clip0_1226_21711">
+            <rect width="10" height="10" fill="white" transform="translate(5 5)"/>
+            </clipPath>
+            </defs>
+        </svg>
+        <span>Custom color</span>
+    </div>
+</div>
+
+<rx-modal-dialog [opened]="opened">
+    <div class="custom-color-picker-container">
+        <color-chrome
+            [color]="value"
+            [disableAlpha]="true"
+            (onChange)="onColorPick($event)">
+        </color-chrome>
+        <div class="buttons-container">
+            <button (click)="opened = false" class="btn btn-light">Cancel</button>
+            <button (click)="onOk()" class="btn btn-primary">Ok</button>
+        </div>
+    </div>
+</rx-modal-dialog>

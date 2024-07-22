@@ -1,0 +1,56 @@
+<app-message-broker />
+
+<top-nav-menu style="z-index: 3; position: fixed; top: 0; left: 0; width: 100%;"
+  [class.hidden]="(guiConfig$ | async).disableTopNavMenu" [state]="state"
+  [ngStyle]="{'filter': eventUploadFile ? 'blur(3px)' : 'none' }"></top-nav-menu>
+<side-nav-menu style="z-index: 2; position: fixed; top: 49px; left: 0; height: calc(100% - 49px);"
+  *ngIf="!(guiConfig$ | async).disableSideNavMenu"></side-nav-menu>
+
+<div class="content" [class.full-height]="(guiConfig$ | async).disableTopNavMenu"
+  [class.full-width]="(guiConfig$ | async).disableSideNavMenu"
+  [ngStyle]="{'filter': eventUploadFile ? 'blur(3px)' : 'none' }">
+  <div id="mainContent" class="main-content" [class.overflow-hidden]="!(numOpenFiles$ | async)">
+    <div *ngIf="!(numOpenFiles$ | async)" class="welcome-content">
+      <img [src]="(guiConfig$ | async).logoUrl" />
+      <!-- <div class="btn-choice-file" (click)="handleLoginClick()">Log In</div> -->
+      <div *ngIf="!eventUploadFile" class="main-text">
+        <div class="background"></div>
+        <h1>Welcome to First class Reader</h1>
+        <p class="description">Select any file including CAD Drawings, 3D Models, Plotter File, etc. and start exploring
+          with our demo right now.</p>
+      </div>
+      <div *ngIf="(guiConfig$ | async).canFileOpen && !eventUploadFile" class="btn-choice-file"
+        (click)="handleChoiceFileClick()">CHOOSE FILE</div>
+      <!-- <p class="copyright">PDF Reader powered by Foxit. Copyright (c) 2003-2024 by Foxit Software Incorporated</p> -->
+    </div>
+    <notification />
+    <div id="rxcontainer" (pointerdown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"
+      (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)">
+      <iframe id="foxitframe" src="/assets/html/foxpage.html"></iframe>
+      <div id="lineConnector" class="lineconnector-container">&nbsp;</div>
+    </div>
+    <rx-annotation-tools></rx-annotation-tools>
+    <rx-bottom-toolbar *ngIf="numOpenFiles$ | async" [(isVisible)]="isVisible" [lists]="lists"></rx-bottom-toolbar>
+    <div *ngFor="let list of lists;">
+      <div *ngIf="list.linkURL !== ' ' && list.linkURL !== '' && isVisible" class="link"
+        [ngStyle]="{ 'top.px' : list.rectangle?.y, 'left.px' : list.rectangle?.x}">
+        <img (click)="followLink = true; annotation = list;" src="/assets/images/link.svg" />
+      </div>
+    </div>
+    <div (click)="pasteMarkUp()" class="paste-markup" [ngStyle]="pasteStyle">
+      <img src="/assets/images/paste-ico.svg" /> Paste
+    </div>
+    <rx-signature></rx-signature>
+    <rx-compare></rx-compare>
+  </div>
+  <rx-search-panel class="note-sidebar"></rx-search-panel>
+  <rx-note-panel class="note-sidebar"></rx-note-panel>
+</div>
+
+<confirmation-modal [opened]="followLink" [annotation]="annotation" [action]="'FOLLOW'" (closed)="followLink = false">
+</confirmation-modal>
+<rx-extract-modal></rx-extract-modal>
+
+<file-info />
+
+<app-align-feature-tutorial />

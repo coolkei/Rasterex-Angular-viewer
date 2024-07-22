@@ -1,0 +1,46 @@
+<rx-panel
+    *ngIf="infoPanelVisible"
+    class="info-panel"
+    [title]="'Info'"
+    [maxHeight]="312"
+    (onClose)="infoPanelVisible = false">
+    <div class="tabbed-menu">
+      <div
+          *ngFor="let group of groups;"
+          class="tabbed-menu-item"
+          [class.active]="selected.name == group.name"
+          (click)="selected = group">
+              <span>{{group.name}}</span>
+      </div>
+    </div>
+    <div class="info-container-wrapper">
+        <div class="info-container" style="grid-template-columns: 150px 200px;">
+            
+          <!-- groups = [ {"name": "Properties"}, {"name": "References"}]; -->
+            <ng-container *ngIf="selected.name === 'Properties'">
+              <div class="header">Property</div><div class="header">Value</div>
+              <ng-container *ngFor="let item of fileInfo | keyvalue">
+                  <div class="row-header" *ngIf="item.key !== 'Fonts' && item.key !== 'XRefs'">{{ item.key }}:</div>
+                  <div class="attribute-value" *ngIf="item.key !== 'Fonts' && item.key !== 'XRefs'">{{ item.value }}</div>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="selected.name === 'Fonts'">
+              <div class="header">Font</div><div class="header">Found</div>
+              <ng-container *ngFor="let item of fileInfo.Fonts">
+                  <div class="row-header">{{ item.path }}</div>
+                  <div class="attribute-value">{{ item.found ? 'yes' : 'no' }}</div>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="selected.name === 'Xrefs'">
+              <div class="header" *ngIf="fileInfo.XRefs.length > 0" >XRef</div><div class="header" *ngIf="fileInfo.XRefs.length > 0" >Found</div>
+              <ng-container *ngFor="let item of fileInfo.XRefs">
+                <div class="row-header">{{ item.path }}</div>
+                <div class="attribute-value">{{ item.found ? 'yes' : 'no' }}</div>
+              </ng-container>
+
+
+            </ng-container>
+            
+        </div>
+    </div>
+</rx-panel>

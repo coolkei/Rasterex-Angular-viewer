@@ -1,0 +1,23 @@
+<ng-container *ngIf="!value; else checked">
+    <svg (click)="handleOnClick()" width="16" height="16" viewBox="0 0 16 16" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.5" y="0.5" width="15" height="15" rx="3.5" stroke="#333C4E" />
+    </svg>
+</ng-container>
+<ng-template #checked>
+    <svg class="checked" (click)="handleOnClick()" width="16" height="16" viewBox="0 0 16 16" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <rect width="16" height="16" rx="4" />
+        <g clip-path="url(#clip0_1277_63367)">
+            <path
+                d="M13.8243 3.7695C13.59 3.53517 13.2101 3.53517 12.9757 3.7695L5.78737 10.9579L3.02428 8.19485C2.78997 7.96052 2.4101 7.96054 2.17575 8.19485C1.94142 8.42915 1.94142 8.80903 2.17575 9.04336L5.36311 12.2307C5.59734 12.465 5.9775 12.4648 6.21164 12.2307L13.8243 4.61803C14.0586 4.38372 14.0586 4.00382 13.8243 3.7695Z"
+                fill="white" />
+        </g>
+        <defs>
+            <clipPath id="clip0_1277_63367">
+                <rect width="12" height="12" fill="#333C4E" transform="translate(2 2)" />
+            </clipPath>
+        </defs>
+    </svg>
+</ng-template>
+<label *ngIf="label" (click)="handleOnClick()">{{label}}</label>

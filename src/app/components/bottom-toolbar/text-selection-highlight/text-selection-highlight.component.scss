@@ -1,0 +1,64 @@
+@import "../../../../assets/scss/config.scss";
+
+.selection-highlight-container {
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none;
+
+    ul.menu {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        gap: 10px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 8px 0px #333C4E33;
+        margin: 0;
+        padding: 0;
+        list-style: unset;
+        list-style-type: none;
+        height: 52px;
+        width: 52px;
+        box-sizing: border-box;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -6px;
+            width: 12px;
+            height: 12px;
+            rotate: 45deg;
+            box-shadow: 1px 1px 1px #EDF1F2;
+            box-sizing: border-box;
+            z-index: 0;
+            background-color: #FFFFFF;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: .1s;
+        }
+
+        li:hover, .is-link {
+            background-color: $accent;
+        }
+
+        li:hover img, .is-link img {
+            filter: brightness(0) invert(1);
+        }
+    }
+}

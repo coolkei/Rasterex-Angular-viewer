@@ -1,0 +1,116 @@
+/* rasterex ui global styles */
+#rxcontainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+#imageDisp,
+#imageTemp,
+#canv3D,
+#imagemag {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.textLayer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    opacity: 0.4;
+    line-height: 1.0;
+    z-index: 4;
+
+    > div {
+        color: transparent;
+        position: absolute;
+        white-space: pre;
+        cursor: text;
+        transform-origin: 0% 0%;
+    }
+
+    > span{
+        color: transparent;
+    }
+
+    ::selection {
+        background: rgb(0,0,255);
+    }
+
+
+    .highlight {
+        background-color: #e3a021;
+        //position: inherit;
+        //padding: 8px 0px;
+        margin-top: -8px;
+
+        &.begin {
+            border-radius: 4px 0px 0px 4px;
+        }
+
+        &.end {
+            border-radius: 0px 4px 4px 0px;
+        }
+
+        &.middle {
+            border-radius: 0px;
+        }
+
+        &.selected {
+            background-color: rgb(0, 100, 0);
+        }
+    }
+
+    .endOfContent {
+        display: block;
+        position: absolute;
+        left: 0px;
+        top: 100%;
+        right: 0px;
+        bottom: 0px;
+        z-index: -1;
+        cursor: default;
+
+        &.active {
+            top: 0px;
+        }
+    }
+}
+
+#foxitframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    visibility: visible;
+    border: none;
+}
+
+
+@media print {
+    body * {
+        display: none;
+    }
+
+    #printdiv, #printdiv * {
+        display: block;
+    }
+}
+
+@media screen {
+    #printdiv, #printdiv * {
+        display: none;
+    }
+}

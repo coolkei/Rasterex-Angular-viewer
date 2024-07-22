@@ -1,0 +1,24 @@
+.info-panel {
+    .tabbed-menu {
+        height: 35px;
+        gap: 0;
+    
+        .tabbed-menu-item {
+            flex-direction: column;
+            width: 116px;
+            font-size: 14px;
+            padding: 10px 0px;
+            border-bottom: 3px solid rgba(237, 241, 242, 0.9);
+    
+            &.active,
+            &:not(.active):hover {
+                font-weight: 600;
+    
+                ::after {
+                    bottom: -2px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<div class="dropdown-container">
+    <div
+        class="dropdown-wrapper"
+        [class.opened]="opened"
+        (click)="handleDropdown()">
+            <div *ngIf="value !== 0;else solid" class="line-style selected">
+                {{options[value]}}
+            </div>
+            <ng-template #solid>
+                <div class="line-style-solid"></div>
+            </ng-template>
+            <img src="/assets/images/arrow-down.svg" class="btn-dropdown" />
+    </div>
+    <div *ngIf="opened" class="options-container">
+        <div
+            class="options-wrapper"
+            [class.drop-position-top]="dropPosition == 'top'">
+            <ul class="options" role="listbox" aria-expanded="false">
+                <li
+                    *ngFor="let option of options; let i = index"
+                    role="option"
+                    tabindex="0"
+                    [class.selected]="i == value"
+                    (click)="handleSelect(i)">
+                        <div *ngIf="i !== 0;else solidOption" class="selected" class="line-style">
+                            {{option}}
+                        </div>
+                        <ng-template #solidOption>
+                            <div class="line-style-solid"></div>
+                        </ng-template>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

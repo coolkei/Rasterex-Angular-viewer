@@ -1,0 +1,73 @@
+@import "../../../../assets/scss/config.scss";
+
+.dropdown-menu-container {
+    position: relative;
+    font-size: 12px;
+    border-radius: 4px;
+
+    .dropdown-menu-button {
+        border-radius: 2px;
+        width: 20px;
+        height: 20px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &.opened {
+            background-color: #EDF1F2;
+        }
+    }
+
+    .options-container {
+        position: fixed;
+        z-index: 10;
+
+        .options-wrapper {
+            position: absolute;
+            top: 3px;
+            background: #FFFFFF;
+            box-shadow: 0px 0px 5px 2px #3C3C3C14;
+            border-radius: 4px;
+
+            &.align-right {
+                right: 0;
+            }
+
+            ul {
+                width: 100%;
+                list-style-type: none;
+                display: flex;
+                flex-direction: column;
+                padding: unset;
+                margin: 4px 0;
+                overflow: auto;
+
+                ::ng-deep {
+                    li {
+                        font-weight: 400;
+                        font-size: 12px;
+                        line-height: 18px;
+                        padding: 6px 12px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        position: relative;
+                        min-height: 18px;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+
+                        &:hover,
+                        &:focus-visible {
+                            background-color: $background-light;
+                            cursor: pointer;
+                            outline: none;
+                            box-shadow: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

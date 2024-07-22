@@ -1,0 +1,183 @@
+<rx-modal-dialog [opened]="true">
+    <div class="rx-modal-container" style="min-width: 680px;">
+        <div class="rx-modal-header">
+            <img (click)="onCancelClick()" class="close" src="/assets/images/close-modal-ico.svg" />
+            <span class="title">CREATE SIGNATURE</span>
+        </div>
+        <div class="rx-modal-body">
+            <div class="content">
+                <div class="tabbed-menu">
+                    <div class="tabbed-menu-item" [class.active]="tabActiveIndex == 0" (click)="onTabSelect(0)"><span style="font-size: 14px;">Draw</span></div>
+                    <div class="tabbed-menu-item" [class.active]="tabActiveIndex == 1" (click)="onTabSelect(1)"><span style="font-size: 14px;">Type</span></div>
+                    <div class="tabbed-menu-item" [class.active]="tabActiveIndex == 2" (click)="onTabSelect(2)"><span style="font-size: 14px;">Image</span></div>
+                </div>
+                <div *ngIf="tabActiveIndex == 1" style="display: flex; width: 100%; gap: 12px;">
+                    <div [class.hidden]="mode === 'editInitials'" [class.invalid]="isFontSignatureInValid" class="rx-label-input" style="flex: 2;">
+                        <label>Full name *</label>
+                        <input [(ngModel)]="fullName" (ngModelChange)="onFullNameChange()" type="text" required placeholder="E.g. John Smith" />
+                        <span class="error">This input is required</span>
+                    </div>
+                    <div [class.hidden]="mode === 'editSignature'" [class.invalid]="isFontInitialsInValid" class="rx-label-input" style="flex: 1;">
+                        <label>Initials *</label>
+                        <input [(ngModel)]="initials" (ngModelChange)="onInitialsChange()" type="text" placeholder="E.g. JS" />
+                        <span class="error">This input is required</span>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="style-section">
+                        <div *ngIf="tabActiveIndex != 2">
+                            <label>Colors:</label>
+                            <rx-color-picker
+                                [allowCustomColor]="false"
+                                [defaultColors]="colors"
+                                [value]="strokeColor"
+                                (valueChange)="onColorSelect($event)">
+                            </rx-color-picker>
+                        </div>
+                        <div [ngSwitch]="tabActiveIndex">
+                            <ng-container *ngSwitchCase="0">
+                                <label>Thickness:</label>
+                                <ul class="thickness-style">
+                                    <li [class.active]="thickness == 1" (click)="onThicknessSelect(1)">
+                                        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0.5 5.92934C0.840247 5.12836 1.46371 4.3126 2.20399 3.80296C2.64648 3.49833 3.38656 3.02973 3.95312 3.02973C4.58566 3.02973 4.65484 3.51873 4.66406 4.07144C4.69708 6.05117 4.35937 8.00035 4.35937 9.96732C4.35937 10.4435 4.4144 10.6041 4.81641 10.9016C5.44511 11.367 6.57168 10.046 6.86458 9.75253C8.63614 7.97728 9.91738 5.80095 11.4123 3.8137C12.086 2.9182 12.6804 1.77996 13.5 1" stroke="#333C4E" stroke-linecap="round"/>
+                                        </svg>
+                                    </li>
+                                    <li [class.active]="thickness == 2" (click)="onThicknessSelect(2)">
+                                        <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.5 5.92934C1.84025 5.12836 2.46371 4.3126 3.20399 3.80296C3.64648 3.49833 4.38656 3.02973 4.95312 3.02973C5.58566 3.02973 5.65484 3.51873 5.66406 4.07144C5.69708 6.05117 5.35937 8.00035 5.35937 9.96732C5.35937 10.4435 5.4144 10.6041 5.81641 10.9016C6.44511 11.367 7.57168 10.046 7.86458 9.75253C9.63614 7.97728 10.9174 5.80095 12.4123 3.8137C13.086 2.9182 13.6804 1.77996 14.5 1" stroke="#333C4E" stroke-width="1.5" stroke-linecap="round"/>
+                                        </svg>
+                                    </li>
+                                    <li [class.active]="thickness == 3" (click)="onThicknessSelect(3)">
+                                        <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1.5 5.92934C1.84025 5.12836 2.46371 4.3126 3.20399 3.80296C3.64648 3.49833 4.38656 3.02973 4.95312 3.02973C5.58566 3.02973 5.65484 3.51873 5.66406 4.07144C5.69708 6.05117 5.35937 8.00035 5.35937 9.96732C5.35937 10.4435 5.4144 10.6041 5.81641 10.9016C6.44511 11.367 7.57168 10.046 7.86458 9.75253C9.63614 7.97728 10.9174 5.80095 12.4123 3.8137C13.086 2.9182 13.6804 1.77996 14.5 1" stroke="#333C4E" stroke-width="2" stroke-linecap="round"/>
+                                        </svg>
+                                    </li>
+                                </ul>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="1">
+                                <rx-dropdown
+                                    style="width: 206px;"
+                                    [align]="'right'"
+                                    [options]="fontOptions"
+                                    [value]="font"
+                                    (valueChange)="onFontSelect($event)">
+                                </rx-dropdown>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="canvas-container">
+                        <div [class.hidden]="mode === 'editInitials'" [class.invalid]="isDrawSignatureInValid || isImageSignatureInValid" class="canvas-wrapper" style="flex: 2;">
+                            <canvas id="drawsign" [class.active]="tabActiveIndex == 0"></canvas>
+                            <canvas id="fontsign" [class.active]="tabActiveIndex == 1"></canvas>
+                            <canvas id="imagesign" style="top: -99999px; left: -99999px"></canvas>
+                            <div class="canvas">
+                                <div [class.active]="tabActiveIndex == 2 && file1" class="image-preview-wrapper">
+                                    <img
+                                        *ngIf="tabActiveIndex == 2 && file1"
+                                        [src]="filePreview1"
+                                        [class.black-white]="bwConversion1" />
+                                </div>
+                                <rx-dnd-zone *ngIf="tabActiveIndex == 2" [class.hidden]="file1" (onDrop)="onDrop1($event)">
+                                    <div class="dnd-content" (click)="onChoose1Click()">
+                                        <input
+                                            type="file"
+                                            style="display: none;"
+                                            onclick="this.value = null;"
+                                            #fileToUpload1
+                                            (change)="onFile1Upload($event)" />
+                                        <p class="dnd-text">Drag & drop a file here or</p>
+                                        <span class="dnd-choose">UPLOAD</span>
+                                    </div>
+                                </rx-dnd-zone>
+                            </div>
+                            <ng-container [ngSwitch]="tabActiveIndex">
+                                <ng-container *ngSwitchCase="0">
+                                    <ng-container *ngIf="!isDrawSignatureCanvasBlanc; else drawSignatureTemplate">
+                                        <span class="action clear" (click)="clearSignatureCanvas()">Clear signature</span>
+                                    </ng-container>
+                                    <ng-template #drawSignatureTemplate>
+                                        <span class="action preview">Draw signature</span>
+                                    </ng-template>
+                                    <span class="error">This input is required</span>
+                                </ng-container>
+                                <span *ngSwitchCase="1" class="action preview">Preview signature</span>
+                                <ng-container *ngSwitchCase="2">
+                                    <ng-container *ngIf="file1; else uploadSignatureTemplate">
+                                        <span (click)=onBwConversion1Change() class="action conversion">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2.81281 15.1871C4.03652 16.4109 5.59562 17.2442 7.29296 17.5818C8.99029 17.9194 10.7496 17.7462 12.3485 17.0839C13.9473 16.4216 15.3139 15.3001 16.2754 13.8612C17.2368 12.4223 17.75 10.7305 17.75 8.99996C17.75 7.26937 17.2368 5.57765 16.2754 4.13872C15.3139 2.69979 13.9473 1.57828 12.3485 0.916011C10.7496 0.253745 8.99029 0.0804659 7.29295 0.418086C5.59562 0.755707 4.03652 1.58906 2.81281 2.81277C1.17187 4.45372 0.249997 6.67931 0.249997 8.99996C0.249997 11.3206 1.17187 13.5462 2.81281 15.1871ZM14.3033 3.69666L3.6967 14.3033C2.29017 12.8967 1.5 10.9891 1.5 8.99996C1.5 7.01083 2.29017 5.10318 3.6967 3.69666C5.10322 2.29013 7.01087 1.49996 9 1.49996C10.9891 1.49996 12.8968 2.29013 14.3033 3.69666Z" fill="#333C4E"/>
+                                            </svg>
+                                        </span>
+                                        <span class="action clear" (click)="onChoose1Click()">Replace image</span>
+                                    </ng-container>
+                                    <ng-template #uploadSignatureTemplate>
+                                        <span class="action preview">Upload signature</span>
+                                    </ng-template>
+                                    <span class="error">This input is required</span>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                        <div [class.hidden]="mode === 'editSignature'" class="canvas-wrapper" [class.invalid]="isDrawInitialsInValid || isImageInitialsInValid" style="flex: 1;">
+                            <canvas id="drawinitials" [class.active]="tabActiveIndex == 0"></canvas>
+                            <canvas id="fontinitials" [class.active]="tabActiveIndex == 1"></canvas>
+                            <canvas id="imageinitials" style="top: -99999px; left: -99999px"></canvas>
+                            <div class="canvas">
+                                <div [class.active]="tabActiveIndex == 2 && file2" class="image-preview-wrapper">
+                                    <img
+                                        *ngIf="tabActiveIndex == 2 && file2"
+                                        [src]="filePreview2"
+                                        [class.black-white]="bwConversion2" />
+                                </div>
+                                <rx-dnd-zone *ngIf="tabActiveIndex == 2" [class.hidden]="file2" (onDrop)="onDrop2($event)">
+                                    <div class="dnd-content" (click)="onChoose2Click()">
+                                        <input
+                                            type="file"
+                                            style="display: none;"
+                                            onclick="this.value = null;"
+                                            #fileToUpload2
+                                            (change)="onFile2Upload($event)" />
+                                        <p class="dnd-text">Drag & drop a file here or</p>
+                                        <span class="dnd-choose">UPLOAD</span>
+                                    </div>
+                                </rx-dnd-zone>
+                            </div>
+                            <ng-container [ngSwitch]="tabActiveIndex">
+                                <ng-container *ngSwitchCase="0">
+                                    <ng-container *ngIf="!isDrawInitialsCanvasBlanc; else drawInitialsTemplate">
+                                        <span class="action clear" (click)="clearInitialsCanvas()">Clear initials</span>
+                                    </ng-container>
+                                    <ng-template #drawInitialsTemplate>
+                                        <span class="action preview">Draw initials</span>
+                                    </ng-template>
+                                    <span class="error">This input is required</span>
+                                </ng-container>
+                                <span *ngSwitchCase="1" class="action preview">Preview initials</span>
+                                <ng-container *ngSwitchCase="2">
+                                    <ng-container *ngIf="file2; else uploadInitialsTemplate">
+                                        <span (click)=onBwConversion2Change() class="action conversion">
+                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2.81281 15.1871C4.03652 16.4109 5.59562 17.2442 7.29296 17.5818C8.99029 17.9194 10.7496 17.7462 12.3485 17.0839C13.9473 16.4216 15.3139 15.3001 16.2754 13.8612C17.2368 12.4223 17.75 10.7305 17.75 8.99996C17.75 7.26937 17.2368 5.57765 16.2754 4.13872C15.3139 2.69979 13.9473 1.57828 12.3485 0.916011C10.7496 0.253745 8.99029 0.0804659 7.29295 0.418086C5.59562 0.755707 4.03652 1.58906 2.81281 2.81277C1.17187 4.45372 0.249997 6.67931 0.249997 8.99996C0.249997 11.3206 1.17187 13.5462 2.81281 15.1871ZM14.3033 3.69666L3.6967 14.3033C2.29017 12.8967 1.5 10.9891 1.5 8.99996C1.5 7.01083 2.29017 5.10318 3.6967 3.69666C5.10322 2.29013 7.01087 1.49996 9 1.49996C10.9891 1.49996 12.8968 2.29013 14.3033 3.69666Z" fill="#333C4E"/>
+                                            </svg>
+                                        </span>
+                                        <span class="action clear" (click)="onChoose2Click()">Replace image</span>
+                                    </ng-container>
+                                    <ng-template #uploadInitialsTemplate>
+                                        <span class="action preview">Upload initials</span>
+                                    </ng-template>
+                                    <span class="error">This input is required</span>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rx-modal-footer">
+            <button (click)="onCancelClick()" class="btn btn-light">CANCEL</button>
+            <button (click)="onCreateClick()" class="btn btn-primary">CREATE</button>
+        </div>
+    </div>
+</rx-modal-dialog>

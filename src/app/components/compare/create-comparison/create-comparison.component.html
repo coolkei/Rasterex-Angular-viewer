@@ -1,0 +1,72 @@
+<rx-modal-dialog *ngIf="!progress && !(modalFileGaleryOpened$ | async); else progressTemplate" class="confirm-dialog">
+    <div class="rx-modal-container" style="min-width: 504px;">
+        <div class="rx-modal-header">
+            <img (click)="onCreateComparisonCancel()" class="close" src="/assets/images/close-modal-ico.svg" />
+            <span class="title">Compare documents</span>
+        </div>
+        <div class="rx-modal-body">
+            <div class="grid">
+                <ng-container>
+                    <div class="header">Files:</div><div class="header">State:</div><div class="header">Color:</div>
+                </ng-container>
+                <ng-container>
+                    <div class="cell color-main"><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{activeFile?.name}}</span></div>
+                    <div class="cell color-secondary">{{selectedOption?.title}}</div>
+                    <rx-dropdown
+                        class="select-color"
+                        [placeholder]="'Select color...'"
+                        [options]="colorOptions"
+                        [value]="color1"
+                        (valueChange)="onColor1Select($event)">
+                    </rx-dropdown>
+                </ng-container>
+                <ng-container>
+                    <rx-dropdown
+                        style="flex-basis: 75%; min-width: 0;"
+                        [options]="fileOptions"
+                        [value]="otherFile"
+                        (valueChange)="onOtherFileSelect($event)">
+                        <div class="select-new-document" (click)="onSelectNewDocument()">
+                            <span>Select new document</span>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.5 10C2.5 10.9849 2.69399 11.9602 3.0709 12.8701C3.44781 13.7801 4.00026 14.6069 4.6967 15.3033C5.39314 15.9997 6.21993 16.5522 7.12987 16.9291C8.03982 17.306 9.01509 17.5 10 17.5C10.9849 17.5 11.9602 17.306 12.8701 16.9291C13.7801 16.5522 14.6069 15.9997 15.3033 15.3033C15.9997 14.6069 16.5522 13.7801 16.9291 12.8701C17.306 11.9602 17.5 10.9849 17.5 10C17.5 8.01088 16.7098 6.10322 15.3033 4.6967C13.8968 3.29018 11.9891 2.5 10 2.5C8.01088 2.5 6.10322 3.29018 4.6967 4.6967C3.29018 6.10322 2.5 8.01088 2.5 10Z" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M7.5 10H12.5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 7.5V12.5" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </rx-dropdown>
+                    <div class="cell color-secondary">{{selectedOption?.value == 'overlay' ? 'Bacground' : 'Overlay'}}</div>
+                    <rx-dropdown
+                        class="select-color"
+                        [placeholder]="'Select color...'"
+                        [options]="colorOptions"
+                        [value]="color2"
+                        (valueChange)="onColor2Select($event)">
+                    </rx-dropdown>
+                </ng-container>
+            </div>
+
+            <button class="swap" (click)="onSwapClick()">
+                <svg class="swap" width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.72657 0.537395C8.99906 0.537395 9.21608 0.762187 9.21608 1.03502V11.7588L10.7168 10.2269C10.9082 10.0315 11.2191 10.0314 11.4104 10.2269C11.4104 10.2269 11.4104 10.2269 11.4105 10.2269L11.339 10.2968C11.4151 10.3745 11.4531 10.4763 11.4531 10.5779C11.4531 10.6796 11.4151 10.7814 11.339 10.8591L9.00195 13.2448C8.84975 13.4002 8.60329 13.4002 8.45119 13.2448L6.11414 10.8591C5.96194 10.7037 5.96194 10.4521 6.11414 10.2968C6.26634 10.1416 6.5128 10.1415 6.6649 10.2968L8.72657 0.537395ZM8.72657 0.537395C8.45407 0.537395 8.23706 0.762188 8.23706 1.03502V11.7588L6.73636 10.2269M8.72657 0.537395L6.73636 10.2269M6.73636 10.2269C6.545 10.0314 6.23409 10.0316 6.04272 10.2268C5.8524 10.421 5.85243 10.7348 6.0427 10.929L8.37973 13.3148L6.73636 10.2269ZM0.589589 3.06965L2.92662 0.683943C2.92662 0.683935 2.92663 0.683928 2.92664 0.68392C3.11795 0.48852 3.42896 0.48852 3.62027 0.68392C3.62028 0.683928 3.62029 0.683935 3.6203 0.683943L5.95732 3.06965C6.0526 3.16692 6.10001 3.29423 6.10001 3.42075C6.10001 3.54725 6.05261 3.67456 5.95734 3.77182L0.589589 3.06965ZM0.589589 3.06965C0.399316 3.26389 0.399284 3.5777 0.589612 3.77187C0.780971 3.96709 1.09186 3.9673 1.28323 3.77185C1.28323 3.77184 1.28324 3.77183 1.28325 3.77182L2.78395 2.23986M0.589589 3.06965L2.78395 2.23986M2.78395 2.23986L2.78395 12.9637C2.78395 13.2365 3.00096 13.4613 3.27346 13.4613C3.54595 13.4613 3.76296 13.2365 3.76296 12.9637L3.76296 2.23986L5.26369 3.77185C5.45508 3.96723 5.76599 3.96727 5.95732 3.77185L2.78395 2.23986Z" fill="#333C4E" stroke="#333C4E" stroke-width="0.2"/>
+                </svg>
+            </button>
+
+        </div>
+        <div class="rx-modal-footer">
+            <button (click)="onCreateComparisonCancel()" class="btn btn-light">CANCEL</button>
+            <button
+                class="btn btn-primary"
+                [disabled]="!(activeFile && otherFile) || !color1 || !color2 || progress"
+                (click)="onCreateComparisonConfirm()">
+                COMPARE
+            </button>
+        </div>
+    </div>
+</rx-modal-dialog>
+
+<ng-template #progressTemplate>
+    <rx-simple-progress *ngIf="!(modalFileGaleryOpened$ | async)">
+        It takes a few seconds to generate the comparison
+    </rx-simple-progress>
+</ng-template>

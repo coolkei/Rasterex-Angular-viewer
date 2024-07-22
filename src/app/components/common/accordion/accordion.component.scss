@@ -1,0 +1,25 @@
+.accordion-header {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    margin: 12px 0;
+    cursor: pointer;
+
+    span {
+        width: 100%;
+        color: #A4ABAE;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .accordion-toggle-btn {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        transition: transform 0.3s ease-in;
+    
+        &.expanded {
+            transform: rotate(180deg);
+        }
+    }
+}

@@ -1,0 +1,34 @@
+<div class="accordion">
+    <div
+      *ngFor="let item of items; index as i"
+      [class.disabled]="item.disabled"
+      [class.active]="expanded.has(i)">
+      <ng-container
+        [ngTemplateOutlet]="item?.customHeader?.templateRef || defaultHeaderTemplate"
+        [ngTemplateOutletContext]="{$implicit: item, index: i, toggle: getToggleState(i), expanded: isExpanded(i) }">
+      </ng-container>
+      <div
+        [class.expanded]="expanded.has(i)"
+        [@contentExpansion]="expanded.has(i) ? 'expanded':'collapsed'">
+        <ng-container *ngTemplateOutlet="item?.content?.templateRef"></ng-container>
+      </div>
+    </div>
+</div>
+
+<ng-template
+  #defaultHeaderTemplate
+  let-item="$implicit"
+  let-index="index"
+  let-toggle="toggle"
+  let-expanded="expanded">
+  <div
+    class="accordion-header"
+    (click)="toggle()">
+    <span>{{item.title}}</span>
+    <img
+      class="accordion-toggle-btn"
+      [class.expanded]="expanded"
+      [ngStyle]="{'transform': isBottom ? (expanded ? 'rotate(0deg)' : 'rotate(180deg)') : ''}"
+      src="/assets/images/arrow-down.svg" />
+  </div>
+</ng-template>

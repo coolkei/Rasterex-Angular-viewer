@@ -1,0 +1,85 @@
+@import "../../../assets/scss/config.scss";
+
+.notification {
+    position: fixed;
+    top: 85px;
+    left: 53%;
+    transform: translate(-50%, -50%);
+    width: 430px;
+    height: 64px;
+    border: 1px solid;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    z-index: 10000;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.33s, opacity 0.33s linear; 
+
+    .image {
+        width: 15%;
+        text-align: center;
+        margin-top: 6px;
+    }
+
+    .text {
+        width: 85%;
+
+        p {
+            margin: 6px 0;
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .message {
+            color: $main;
+            font-size: 12px;
+            font-weight: 400;
+        }
+    }
+}
+
+.is-notification {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.info {
+    border-color: #359EFF;
+    background: #E3EFFD;
+
+    .title {
+        color: #359EFF;
+    }
+}
+
+.error {
+    border-color: #FF0000;
+    background: #FDE3E3;
+
+    .title {
+        color: #FF0000;
+    }
+}
+
+.warning {
+    border-color: #CAA210;
+    background: #FFF1DC;
+
+    .title {
+        color: #CAA210;
+    }
+}
+
+.success {
+    border-color: $accent;
+    background: #DDF4E4;
+
+    .title {
+        color: $accent;
+    }
+}

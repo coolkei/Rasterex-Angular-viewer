@@ -1,0 +1,16 @@
+<div *ngIf="item" class="treeview-item">
+  <ng-template
+    [ngTemplateOutlet]="template"
+    [ngTemplateOutletContext]="{item: item, level: level, onCollapseExpand: onCollapseExpand, onCheckedChange: onCheckedChange}">
+  </ng-template>
+  <div *ngIf="!item.collapsed">
+    <rx-treeview-item
+      *ngFor="let child of item.children"
+      [config]="config"
+      [item]="child"
+      [template]="template"
+      [level]="level + 1"
+      (checkedChange)="onChildCheckedChange(child, $event)">
+    </rx-treeview-item>
+  </div>
+</div>

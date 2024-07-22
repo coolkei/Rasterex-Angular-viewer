@@ -1,0 +1,9 @@
+<div class="notification" 
+    [ngClass]="{ 'info': type === 'info', 'error': type === 'error', 'warning': type === 'warning', 'success': type === 'success', 'is-notification': isNotification }"
+>
+    <div class="image"><img [src]="typeInfo[type]?.src" alt="icon" /></div>
+    <div class="text">
+        <p class="title">{{typeInfo[type]?.title}}</p>
+        <p class="message">{{ message }}</p>
+    </div>
+</div>

@@ -1,0 +1,164 @@
+@import "../../../../assets/scss/config.scss";
+
+.properties-panel-container {
+    background-color: #FFFFFF;
+    border-radius: 0 0 4px 4px;
+
+    .snap-section {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 12px;
+        font-weight: 600;
+        padding-top: 16px;
+        padding-bottom: 16px;
+
+        position: relative;
+        span {
+            color: #A4ABAE;
+            flex-grow: 1;
+        }
+
+        &::before {
+            content: '';
+            display: block;
+            width: calc(100% + 24px);
+            border-top: 1px solid #EDF1F2;
+            position: absolute;
+            left: -12px;
+            top: 0;
+        }
+    }
+    .main-content {
+        width: 274px;
+        box-sizing: border-box;
+
+        &:not(.no-padding) {
+            padding: 12px;
+        }
+
+        .sub-content {
+            display: flex;
+            flex-direction: column;
+
+            section {
+                h4 {
+                    font-size: 12px;
+                    font-weight: 700;
+                    line-height: 16px;
+                    color: #A4ABAE;
+                }
+
+                textarea {
+                    border: none;
+                    outline: none;
+                    box-shadow: none;
+                    resize: none;
+                    font-family: 'OpenSans';
+                    font-size: 14px;
+                    background-color: #CDE6F9;
+                    padding: 0;
+                    width: 100%;
+                    height: 100%;
+                    color: $main;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                    padding: 8px;
+                    margin-top: 16px;
+                }
+
+                .slider-container {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+
+                    .slider {
+                        flex-grow: 1;
+                    }
+
+                    .value {
+                        border-radius: 4px;
+                        border: 1px solid #EDF1F2;
+                        padding: 8px 12px;
+                        font-size: 14px;
+                        line-height: 22px;
+                        font-weight: 400;
+                        color: $main;
+                        max-width: 36px;
+                        min-width: 36px;
+                        text-align: center;
+                    }
+                }
+
+                .markup-display-name-container {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    box-sizing: border-box;
+                    gap: 8px;
+                    margin-bottom: 8px;
+            
+                    input[type="text"] {
+                        background: transparent;
+                        border: 1px solid #EDF1F2;
+                        border-radius: 4px;
+                        height: 28px;
+                        padding: 3px 8px;
+                        text-align: left;
+                        box-sizing: border-box;
+                        outline: none;
+                        transition: 0.3s;
+                        flex-grow: 1;
+            
+                        &::placeholder {
+                            color: #A4ABAE;
+                        }
+                    }
+            
+                    span {
+                        border-radius: 4px;
+                        border: 1px solid #EDF1F2;
+                        padding: 4px;
+                        font-size: 14px;
+                        font-weight: 400;
+                        color: #A4ABAE;
+                        max-width: 36px;
+                        min-width: 36px;
+                        text-align: center;
+                        background-color: #F5F5F6;
+                        box-sizing: border-box;
+                    }
+                }
+            }
+        }
+
+        .info-container {
+            display: grid;
+            grid-template-columns: 94px 1fr;
+            grid-column-gap: 1px;
+            grid-row-gap: 1px;
+            margin-top: 12px;
+            background-color: #EDF1F2;
+
+            div {
+                padding: 8px 12px;
+                line-height: 16px;
+                font-size: 12px;
+                font-weight: 400;
+
+                &.header {
+                    font-weight: 700;
+                }
+
+                &:not(.header) {
+                    background-color: #FFFFFF;
+                }
+
+                &.row-header {
+                    color: #A4ABAE;
+                }
+            }
+        }
+    }
+}

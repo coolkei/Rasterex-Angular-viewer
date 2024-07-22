@@ -1,0 +1,38 @@
+.rx-modal-dialog-wrapper{
+    z-index: 9999;
+   // overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // background-color: rgba(198, 198, 198, 0.8);
+    background-color: #A9A9A980;
+    // background: #0000006B;
+
+
+    .rx-modal-dialog-container {
+        position: absolute;
+        background: #FFFFFF;
+        border-radius: 4px;
+        //min-width: 500px;
+        //min-height: 100px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+
+        &.position-custom {
+            left: unset;
+            transform: unset;
+        }
+
+        .rx-modal-dialog-body {
+            //overflow: auto;
+            flex: 1 1 0;
+            //padding: 10px;
+            //min-height: 200px;
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<div
+    [ngDraggable]="draggable"
+    [bounds]="bounds"
+    [inBounds]="true"
+    [handle]="panelHeader"
+    class="panel-container">
+    <div #panelHeader class="panel-header">
+        <span class="title">{{title}}</span>
+        <span class="btn-close" (click)="onCloseClick()">&times;</span>
+    </div>
+    <div class="panel-body" [ngStyle]="{'max-height.px': maxHeight, 'overflow-y': 'auto'}">
+        <ng-content></ng-content>
+    </div>
+</div>

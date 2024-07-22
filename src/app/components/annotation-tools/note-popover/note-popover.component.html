@@ -1,0 +1,22 @@
+<div *ngIf="visible && top && left" class="note-popover-container" [ngStyle]="{ 'top.px' : top, 'left.px' : left }">
+    <div class="note-popover-wrapper">
+        <div class="note-popover-content">
+            <div class="body">
+                <div>
+                    <b>{{note.author}}</b>
+                    <i>{{note.created}}</i>
+                </div>
+                <textarea
+                    [class.readonly]="mode == 'tooltip'"
+                    [readonly]="mode == 'tooltip'"
+                    placeholder="Type here..."
+                    [(ngModel)]="text">
+                </textarea>
+            </div>
+            <div *ngIf="mode == 'editor'" class="footer">
+                <button (click)="visible = false" class="btn btn-light">Cancel</button>
+                <button (click)="onOk()" class="btn btn-primary" [class.disabled]="!text">{{btnTitle}}</button>
+            </div>
+        </div>
+    </div>
+</div>

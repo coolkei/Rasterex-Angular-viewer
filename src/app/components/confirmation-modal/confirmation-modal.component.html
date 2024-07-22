@@ -1,0 +1,19 @@
+<rx-modal-dialog *ngIf="opened">
+    <div class="confirm-modal-container confirmation-modal">
+        <div class="rx-modal-dialog-header">
+            <img (click)="cancel()" class="close" src="/assets/images/close-modal-ico.svg" />
+        </div>
+        <div class="body">
+            <div *ngIf="text; else link" class="list-wrapper">
+                <p>{{ text }}</p>
+            </div>
+            <ng-template #link>
+                <p>Are you sure you want to follow the <span style="color:#838687;">{{markupLink()}}</span> link?</p>
+            </ng-template>
+        </div>
+        <div class="footer">
+            <button (click)="cancel()" class="btn btn-light">CANCEL</button>
+            <button (click)="confirm(action)" class="btn btn-primary">{{ action }}</button>
+        </div>
+    </div>
+</rx-modal-dialog>

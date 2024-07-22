@@ -1,0 +1,19 @@
+<div class="text-style-select-container">
+    <div style="display: flex; flex-direction: row; gap: 12px;">
+        <rx-dropdown
+            style="flex-grow: 1;"
+            [options]="fontFaces"
+            [value]="{label:value.font,value:value.font}"
+            (valueChange)="onFontFaceSelect($event)">
+        </rx-dropdown>
+        <rx-dropdown
+            [options]="fontSizes"
+            [value]="{label:value.size,value:value.size}"
+            (valueChange)="onFontSizeSelect($event)">
+        </rx-dropdown>
+    </div>
+    <div class="btn-group" role="group">
+        <button [class.selected]="value.style.bold" (click)="onFontStyleSelect('bold')"><img src="/assets/images/font-bold-ico.svg"/></button>
+        <button [class.selected]="value.style.italic" (click)="onFontStyleSelect('italic')"><img src="/assets/images/font-italic-ico.svg" /></button>
+    </div>
+</div>

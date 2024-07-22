@@ -1,0 +1,35 @@
+<div class="dropdown-container">
+    <div
+        class="dropdown-wrapper"
+        [class.disabled]="disabled"
+        [class.opened]="opened"
+        [class.transparent]="transparent"
+        (click)="handleDropdown()">
+            <span class="value">{{ label }}</span>
+            <img src="assets/images/arrow-down.svg" class="btn-dropdown" />
+    </div>
+    <div *ngIf="opened" class="options-container">
+        <div
+            class="options-wrapper"
+            [class.drop-position-top]="dropPosition == 'top'">
+            <ul class="options" role="listbox" aria-expanded="false">
+                <li
+                    role="option"
+                    [class.selected]="allSelected"
+                    (click)="handleSelectAll()">
+                        <rx-checkbox [value]="allSelected"></rx-checkbox>
+                        <span>All</span>
+                </li>
+                <li
+                    *ngFor="let item of options"
+                    role="option"
+                    tabindex="0"
+                    [class.selected]="item.selected"
+                    (click)="handleSelect(item)">
+                        <rx-checkbox [value]="item.selected"></rx-checkbox>
+                        <span>{{ item?.label }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

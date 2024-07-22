@@ -1,0 +1,20 @@
+<rx-panel
+    *ngIf="infoPanelVisible"
+    class="info-panel"
+    style="z-index: 9"
+    [title]="'3D part info'"
+    [maxHeight]="312"
+    (onClose)="infoPanelVisible = false">
+    <div class="info-container-wrapper">
+        <div class="info-container">
+            <div class="header">Attribute</div><div class="header">Value</div>
+            <ng-container *ngFor="let item of infoData | keyvalue">
+                <div class="row-header">{{item.key}}</div>
+                <div class="attribute-value">
+                    {{item.value}}
+                    <img (click)="copyText(item.value)" src="/assets/images/copy-ico.svg" />
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</rx-panel>

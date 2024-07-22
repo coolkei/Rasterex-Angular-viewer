@@ -1,0 +1,18 @@
+<div class="save-comparison-menu-container">
+    <div class="save-comparison-menu">
+        <div class="save-comparison-menu-title">Save</div>
+        <div class="save-comparison-menu-button" [class.opened]="opened" (click)="opened = !opened">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.73333 5.86663L8 10.1333" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12.2667 5.86663L8.00001 10.1333" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </div>
+    <div *ngIf="opened" class="options-wrapper">
+        <div class="options-container"  [class.drop-position-top]="dropPosition == 'top'">
+            <ul>
+                <li *ngFor="let option of options" (click)="onOptionSelect(option)">{{option.title}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+@import "../../../../assets/scss/config.scss";
+
+.dropdown-container {
+    position: relative;
+    font-size: 12px;
+    //width: fit-content;
+
+    .dropdown-wrapper {
+        border-radius: 4px;
+        border: 1px solid #EDF1F2;
+        padding: 6px 10px 6px 10px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &.opened {
+            border-color: #A4ABAE;
+
+            img {
+                filter: invert(1);
+            }
+        }
+
+        .value {
+            top: 20px;
+            line-height: 24px;
+            white-space: nowrap;
+            flex-grow: 1;
+        }
+
+        .left-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        &.opened {
+            .btn-dropdown {
+                transform: rotate(180deg);
+            }
+        }
+
+        &.disabled {
+            opacity: .75;
+        }
+
+        &:not(.transparent) {
+            background-color: $background-light;
+        }
+    }
+
+    .options-container {
+        position: relative;
+
+        .options-wrapper {
+            position: fixed;
+            z-index: 10;
+            background: #FFFFFF;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            width: calc(100% - 24px);
+
+            &.align-right {
+                right: 0;
+            }
+
+            ul.options {
+                width: 100%;
+                list-style-type: none;
+                display: flex;
+                flex-direction: column;
+                padding: unset;
+                overflow: auto;
+                max-height: 170px;
+                margin: 0;
+
+                li {
+                    font-weight: 400;
+                    font-size: 14px;
+                    padding: 10px 12px;
+                    white-space: nowrap;
+                    position: relative;
+                    min-height: 18px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+
+                    &:not(:last-child) {
+                        border-bottom: 1px solid $background-light;
+                    }
+
+                    &:hover,
+                    &:focus-visible {
+                        cursor: pointer;
+                        outline: none;
+                        box-shadow: none;
+                    }
+
+                    .icon {
+                        width: 16px;
+                        height: 16px;
+                    }
+                }
+            }
+        }
+    }
+}
